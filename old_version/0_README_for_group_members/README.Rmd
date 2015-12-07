@@ -1,0 +1,35 @@
+---
+title: "README"
+author: "Patrick Applegate, patrick.applegate@psu.edu"
+date: "18 August 2015"
+output: pdf_document
+---
+
+# Notes on this set of exercises
+
+This is a *draft* e-textbook that we hope to release as a free, open-source book on the Web.  
+
+Within the Keller group, the exercises will be useful for helping new members learn the basic techniques that we use to carry out research.  It is also intended for use in Klaus' *Risk Analysis in the Earth Sciences* course (previously co-taught by Ryan Sriver and me).  
+
+If you are using these exercises for **your own learning** or **as part of a course**, be aware that some of the exercise folders contain extra files that include **partial or complete solutions to the exercises.**  At present, these files are not well labeled; they are sometimes indicated as `lab*_done.R` or `lab*_script.R`, but not always.  However, the number of files in each folder is limited, so inspection of the lab document (the .Rmd or .pdf file in each folder) should help identify which files should be given out to students in a course and which should not be.  
+
+**TODO**: Add a manifest of files to each folder to indicate what each file is for.  
+
+# Adding to this e-textbook
+
+This textbook is designed to be modular; other members of the group can and should add their own exercises.  This folder includes a template file that provides a basis for writing new exercises.  To the degree possible, please follow the format set out in other exercises; you should include 
+
+* learning objectives, 
+* an introduction, 
+* a tutorial, 
+* exercises, 
+* questions, and 
+* (if needed) a reference list, 
+
+in each exercise.  
+
+The book has been written in [R Markdown](http://rmarkdown.rstudio.com), a straightforward, human-readable file format for interweaving code with text.  New chapters should also be written in R Markdown.  Ask Patrick for help with writing R Markdown documents.  
+
+# Suggested authorship policy
+
+Patrick and Klaus serve as editors. If you contribute ideas, code, or text to the e-textbook, your name will be added to the total list of authors on the cover page.  Individual chapters should also have author lists that will be a subset of the total list of authors on the cover page.  My name (Patrick Applegate) will remain as first author unless someone else contributes at least eleven new chapters as first author.  Following group practice, Klaus will remain as last (senior) author.  

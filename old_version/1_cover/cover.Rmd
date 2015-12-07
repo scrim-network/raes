@@ -1,0 +1,27 @@
+---
+title: "Risk Analysis in the Earth Sciences: 
+
+A Lab Manual with Exercises in R"
+
+editors: "Patrick J. Applegate (patrick.applegate@psu.edu) and Klaus Keller (klaus@psu.edu)"
+Chapter Authors: "Patrick J. Applegate (patrick.applegate@psu.edu), Ryan L. Sriver, Gregory G. Garner, Richard B. Alley, and Klaus Keller"
+date: "18 August 2015"
+output: pdf_document
+---
+
+
+
+Edited by Patrick J. Applegate  and Klaus Keller.
+
+Chapter (Contributing) Authors: Patrick J. Applegate, Ryan L. Sriver, Gregory G. Garner, Richard B. Alley, and Klaus Keller"
+
+
+Last Changes: 18 August 2015
+
+Copyright 2015 by the Authors
+
+This e-textbook is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This e-textbook is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this e-textbook.  If not, see <http://www.gnu.org/licenses/>.

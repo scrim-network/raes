@@ -1,0 +1,133 @@
+---
+title: 'Introduction'
+author: 'Patrick Applegate, patrick.applegate@psu.edu, and Klaus Keller, klaus@psu.edu'
+date: "7 September 2015"
+output:
+  pdf_document:
+    fig_caption: yes
+---
+
+<!-- Copyright 2015 by the Authors -->
+
+<!-- This file is part of Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R. -->
+
+<!-- This e-textbook is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. -->
+
+<!-- This e-textbook is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details. -->
+
+<!-- You should have received a copy of the GNU General Public License along with this e-textbook.  If not, see <http://www.gnu.org/licenses/>. -->
+
+# Climate science and climate risks
+
+We begin with a very brief discussion of some key findings of climate science and the problems posed by climate change.  There are many useful reviews of these subjects, in both textbook and popular formats (e.g., Kump et al., 2009; Alley, 2011).  For high-level discussions of these topics, see the [Intergovernmental Panel on Climate Change](http://www.ipcc.ch/index.htm)'s recent reports, particularly the Technical Summaries of the IPCC's Working Groups I and II (Stocker et al., 2013; Field et al., 2014).  We particularly recommend that you read chapters 1, 3, 6, 15, and 16 in Kump et al. (2009) before working on the exercises in this e-textbook.  
+
+Most scientists who study the climate system agree that human activities are causing surface air temperatures to increase (e.g. Oreskes, 2007).  Combustion of fossil fuels and changes in land use lead to increases in the concentrations of carbon dioxide, methane, and nitrous oxide in the atmosphere.  The increased concentrations of these gases trap heat near the earth's surface that would normally escape to outer space.  Temperatures have risen measurably over the last century and will probably continue to increase in the future (Alexander et al., 2013; Collins et al., 2013).  
+
+This increase in surface air temperatures affects other parts of the Earth system, notably sea level.  Rising surface air temperatures cause the water near the ocean's surface to expand, and also lead to increased rates of melting from land ice.  Global mean sea level has risen by a few tens of centimeters over the past 1-2 centuries, and could go up by more than one meter by 2100 (e.g. NOAA, 2012; Alexander et al., 2013; Church et al., 2013).  
+
+Increases in sea level create risks for people living near present-day sea level.  Sea level at a particular point along the world's coastline rises and falls over time scales of hours to days, in response to tides and storms.  Stacked on top of the long-term rise in sea level, these short-period oscillations flood normally-dry land with increased frequency (e.g. Spanger-Siegfried et al., 2014).  
+
+Fossil fuel consumption also creates benefits for people, although these benefits are unevenly distributed.  Countries with low per capita [gross domestic products](https://en.wikipedia.org/wiki/Gross_domestic_product) also tend to emit very little carbon dioxide per person.  Among countries with high per capita gross domestic products, some emit large amounts of carbon dioxide per person each year, whereas others emit comparatively little.  However, achieving good economic outcomes in today's energy economy seems to require at least some fossil fuel consumption.  Moreover, the benefits of fossil fuel consumption occur now, whereas the negative effects of climate change will take place primarily in the future.  
+
+Thus, reducing greenhouse gas emissions creates costs in terms of lost economic productivity.  Modern societies require large amounts of energy to manufacture goods, produce food, and move people from place to place.  Today, most of that energy comes from fossil fuels (IEA, 2014).  Reducing fossil fuel consumption likely means cuts to manufacturing, agriculture, or transportation, at least in the short term.  
+
+# Some questions
+
+The discussion above leads to several interrelated questions: 
+
+1. How much carbon dioxide, and other greenhouse gases, will human societies emit in the future (e.g. Sanford et al., 2014)?
+2. How much will surface air temperatures rise in response to past and future greenhouse gas emissions?
+3. How much will sea level rise as a consequence of surface air temperature increases?
+4. What effects will increases in temperature and sea level, as well as changes in precipitation and other climatic variables, have on people? 
+5. Given the benefits associated with fossil fuel consumption and the risks presented by climate change, what is the appropriate balance between economic growth, cutting greenhouse gas emissions, and building protective measures to moderate the negative effects of climate change?
+6. In choosing a strategy for addressing climate change, how do we take account of values like fairness?  For example, how do we ensure that the negative impacts of climate change do not fall disproportionately on people who have not contributed to the problem?  
+
+Answering these questions requires contributions from several disciplines, including the social sciences (especially economics; questions 1, 4, and 5), meteorology (2), oceanography (3), glaciology (3), and philosophy (6).  It also requires estimating future changes, often with computer models.  
+
+Statistics also plays an important role in answering these questions, because our answers always contain some level of uncertainty.  Future changes in temperature and sea level depend on emissions (question 1), which are difficult to predict.  Moreover,
+climate projections are made with imperfect computer models that depend on input parameters whose values we aren't sure of.  When we make an estimate of future changes using a computer model, how sure should we be about the answer?  How can we report our answers in a way that accurately reflects the state of our knowledge?  Statistics is the discipline that provides answers to these questions.  
+
+# Levels of (un)certainty
+
+Suppose that we wish to characterize the state of our knowledge about a future event whose outcomes can take values on the real number line.  Depending on the event in question, this quantity can be *certain*, *uncertain*, or *deeply uncertain*.  These "levels of uncertainty" (Riesch, 2013) have different mathematical representations: 
+
+* If the outcome is certain, it can take just one value.
+* If the outcome is uncertain, but not deeply uncertain, there is a well-defined and generally agreed-upon [probability density function](https://en.wikipedia.org/wiki/Probability_density_function) that relates different potential outcomes to the probability that they will occur (see Exercise 3 for a discussion of probability density functions).  For example, rolling a die has six possible outcomes (the integers 1, 2,... 6), and each of these outcomes is equally likely to occur if the die is fair.
+* If the outcome is deeply uncertain, there is no single, agreed-upon probability density function describing the chance of observing different outcomes.
+
+Many important questions in climate science involve deep uncertainty.  Published estimates of the climate sensitivity provide perhaps the clearest demonstration of this point.  Climate sensitivity is the change in global mean temperature that would result if carbon dioxide concentrations in the atmosphere were to double.  Many studies have estimated this quantity.  Though these studies have obtained overlapping answers, their probability density functions differ (Collins et al., 2013, their Fig. 1 in Box 12.2; see also Meehl et al., 2007, their Fig. 9.20).  
+
+# What is risk?
+
+Answering many important questions requires careful consideration of *risk*.  Risk is the harm associated with a particular bad outcome, multiplied by the chance of that bad outcome occurring.  For example, answering questions 5 and 6, above, requires considering the harms associated with future climate change, given that we are not sure how severe it will be (questions 1-4).  A possible future event can represent an important risk if it is relatively benign, but very likely to occur, or if it is very unlikely, but extremely damaging if it does happen.  
+
+Classic risk analysis typically assumes that the probability density functions relating outcomes to the chances of their occuring are well-known.  However, as noted above, many questions in climate science have deeply uncertain answers.  In these cases, other methods have to be used to assess the merits of different approaches for managing climate risk.  One such approach is robust decision making (RDM; Lempert et al., 2013; see also Hadka et al., 2015), which focuses on identifying the weaknesses of particular systems and then identifying solutions which produce good results over a wide range of potential outcomes.  
+
+Risk analysis in the Earth sciences often involves considering low-probability, high-impact events.  For example, at least one study suggests that large temperature increases could make important parts of the Earth's surface metabolically uninhabitable (Sherwood and Huber, 2010).  Animals, including humans, have to maintain a body temperature within a relatively restricted range in order to survive.  Climate modeling indicates that future climate change could raise temperatures near the equator so much that human beings could not live there, except in air-conditioned buildings.  This possibility is unlikely, but would have important effects on human societies.  
+
+# "Uncertainty" vs. "risk"
+
+The meanings that we assign to "uncertainty", "deep uncertainty", and "risk" seem intuitive to us; however, other researchers use these words to mean quite different things.  The taxonomy we use here separates future events into groups depending on whether or not we have a good sense of the probabilities associated with different outcomes, and it distinguishes the chances of different outcomes from their consequences.  However, an influential early taxonomy of uncertainty (Knight, 1921) used "risk" and "uncertainty" to represent the concepts that we term "uncertainty" and "deep uncertainty," respectively.  We have also heard influential scientists use the word "uncertainty" to mean the same thing as what we term "risk."  Readers of this e-textbook should be aware of these varying definitions when looking at other sources.  
+
+# Computer programming in R
+
+To help answer the questions above, it makes sense to use a computing environment that is flexible, designed to be used for statistics, and has good plotting capabilities.  Although not the only possibility, [R](http://www.r-project.org) may be the best tool for the job.  A [*New York Times* article](http://www.nytimes.com/2009/01/07/technology/business-computing/07program.html?pagewanted=all&_r=0) (Vance, 2009) lists some of R's advantages:
+
+* it is widely used in industry and academia (Revolution Analytics maintains a [list of companies](http://www.revolutionanalytics.com/companies-using-r) that use R)
+* it allows users to perform complex analyses without a deep knowledge of computer science
+* it is free and open-source
+* it is flexible (there are [thousands of user-developed libraries](https://cran.rstudio.com/web/packages/available_packages_by_name.html) that extend the language's core functionality)
+
+The *Times* article goes on to explain that, as R's popularity increases, other closed-source statistics packages are becoming less commonly used.  These trends have become more noticeable in the years between the *Times* article and the writing of this e-textbook; Robert Muenchen has written a [detailed blog post](http://r4stats.com/articles/popularity/) tracking the popularity of different software packages for statistics and data analysis.  According to this article, R is commonly mentioned as a desirable skill in online job postings, and is gaining in popularity among academic users relative to closed-source packages such as SAS and SPSS.  
+
+# About this book
+
+This e-textbook presents a series of laboratory exercises that introduce students to the statistical aspects of risk analysis in the Earth sciences using R.  Most of these exercises have to do with sea level rise, which is a major focus of the authors' research activities. 
+
+The exercises are intended for upper-level undergraduates, beginning graduate students, and professionals in other areas who wish to gain insight into academic climate risk analysis.  Previous programming experience is helpful, but not required; the first exercise explains how to learn the basics of R.  
+
+Each exercise begins with a description of the Earth science and/or statistical concepts that the exercise teaches.  Next, each exercise presents a detailed explanation of a piece of existing R code.  Finally, students are asked to either modify the existing code or write their own code to produce a well-defined outcome.  Each exercise also includes questions to encourage classroom discussion and reflection on the part of individual students.  
+
+A few chapters contain appendices that present additional discussion of the topics raised in the preceding parts of those chapters.  These appendices are intended for graduate students or researchers who have additional background in programming or the Earth sciences.  They can be skipped by other readers with no loss in comprehension.  
+
+The book is designed to be modular.  The first nine exercises (0-8) were written by Patrick Applegate, with contributions by others as noted in the individual chapters.  Other exercises may be added by members of the Keller research group in the future.  
+
+# An important note
+
+Carrying out the exercises in this e-textbook will not teach you to perform publication-quality or consulting-grade risk analyses.  This e-textbook is intended primarily for advanced undergraduates, and the material presented here should only be applied to "real" problems after additional training.  The authors and editors of this e-textbook specifically disclaim any liability for damages associated with the use of the material presented in this e-textbook.  
+
+# References
+
+Alexander, L. V., et al., 2013.  Summary for policymakers.  In Stocker, T. F., et al., eds., Climate Change 2013: The Physical Science Basis. Contribution of Working Group I to the Fifth Assessment Report of the Intergovernmental Panel on Climate Change, Cambridge University Press.  Available online at http://www.climatechange2013.org/report/full-report/  
+
+Alley, R. B., 2011.  Earth: The Operators' Manual.  W. W. Norton and Company, 496 p.  
+
+Church, J. A., et al., 2013.  Sea level change.  In Stocker, T. F., et al., eds., Climate Change 2013: The Physical Science Basis. Contribution of Working Group I to the Fifth Assessment Report of the Intergovernmental Panel on Climate Change, Cambridge University Press.  Available online at http://www.climatechange2013.org/report/full-report/  
+
+Collins, M., et al., 2013.  Long-term climate change: projections, commitments, and irreversibility.  In Stocker, T. F., et al., eds., Climate Change 2013: The Physical Science Basis. Contribution of Working Group I to the Fifth Assessment Report of the Intergovernmental Panel on Climate Change, Cambridge University Press.  Available online at http://www.climatechange2013.org/report/full-report/  
+
+Field, C. B., et al., 2014.  Technical summary.  In Field, C. B., et al., eds., Climate Change 2014: Impacts, Adaptation, and Vulnerability. Part A: Global and Sectoral Aspects. Contribution of Working Group II to the Fifth Assessment Report of the Intergovernmental Panel on Climate Change, Cambridge University Press.  Available online at http://ipcc-wg2.gov/AR5/report/full-report/  
+
+Hadka, D., Herman, J., Reed, P., and Keller, K., 2015.  OpenMORDM: an open source framework for many-objective robust decision making.  Environmental Modeling and Software.  doi: 10.1016/j.envsoft.2015.07.014  
+
+IEA (International Energy Agency), 2014.  Key world energy statistics.  Available online at http://www.iea.org/publications/freepublications/publication/key-world-energy-statistics-2014.html  
+
+Knight, F. H., 1921.  Risk, uncertainty, and profit.  Library of Economics and Liberty.  Available online at http://www.econlib.org/library/Knight/knRUP.html  
+
+Kump, L. R., Kasting, J. F., and Crane, R. G., 2009.  The earth system (3rd ed).  Prentice Hall, 432 p.  
+
+Meehl, G. A., et al., 2007.  Global climate projections.  In Solomon, S., et al. (eds), Climate Change 2007: The Physical Science Basis. Contribution of Working Group I to the Fourth Assessment Report of the Intergovernmental Panel on Climate Change, Cambridge University Press.  Available online at https://www.ipcc.ch/publications_and_data/ar4/wg1/en/contents.html
+
+NOAA (National Oceanic and Atmospheric Administration), 2012.  Global sea level rise scenarios for the United States National Climate Assessment.  NOAA Technical Report OAR CPO-1.  Available online at http://cpo.noaa.gov/AboutCPO/AllNews/TabId/315/ArtMID/668/ArticleID/80/Global-Sea-Level-Rise-Scenarios-for-the-United-States-National-Climate-Assessment.aspx  
+
+Oreskes, N., 2007.  The scientific consensus on climate change: how do we know we're not wrong?  In DiMento, J. F. C., and Doughman, P., Climate Change: What It Means for Us, Our Children, and Our Grandchildren.  MIT Press, 360 p.  
+
+Riesch, H., 2013.  Levels of uncertainty.  In Roeser, S., Hillerbrand, R., Sandin, P., Peterson, M. (eds.), Essentials of Risk Theory.  SpringerBriefs in Philosophy, Springer, 148 p.  Available online at http://www.springer.com/us/book/9789400754546  
+
+Sanford, T., Frumhoff, P. C., Luers, A., and Gulledge, J., 2014.  The climate policy narrative for a dangerously warming world.  Nature Climate Change 4, 164–166.  Available online at http://www.nature.com/nclimate/journal/v4/n3/full/nclimate2148.html  
+
+Spanger-Siegfried, E., Fitzpatrick, M., and Dahl, K., 2014.  Encroaching tides: how sea level rise and tidal flooding threaten U.S. East and Gulf Coast communities over the next 30 years.  Union of Concerned Scientists, 66 p.  Available online at http://www.ucsusa.org/global_warming/impacts/effects-of-tidal-flooding-and-sea-level-rise-east-coast-gulf-of-mexico#.VbJZGXj6QfM  
+
+Stocker, T. F., et al., 2013.  Technical summary.  In Stocker, T. F., et al., (eds.),  Climate Change 2013: The Physical Science Basis. Contribution of Working Group I to the Fifth Assessment Report of the Intergovernmental Panel on Climate Change, Cambridge University Press.  Available online at http://www.climatechange2013.org/report/full-report/  
+
+Vance, A., 7 January 2009.  Data analysts captivated by R’s power.  The New York Times, p. B6.  Available online at http://www.nytimes.com/2009/01/07/technology/business-computing/07program.html?pagewanted=all&_r=1&  
