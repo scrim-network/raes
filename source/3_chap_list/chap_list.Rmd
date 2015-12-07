@@ -1,0 +1,34 @@
+---
+title: "List of Chapters"
+author: "Patrick Applegate, patrick.applegate@psu.edu"
+date: "29 October 2015"
+output: pdf_document
+---
+
+# Contributor Bios  
+
+# Acknowledgements  
+
+# Introduction  
+
+# Exercises
+
+## Exercise #0: Learning the basics of R  
+
+## Exercise #1: Downloading and plotting time series data  
+
+## Exercise #2: Normal distributions and the Galton board  
+
+## Exercise #3: Other probability distributions and random sampling  
+
+## Exercise #4: What is the economically “optimal” height of flood protection structures?: The Van Dantzig (1956) example  
+
+## Exercise #5: Fitting a second-order polynomial to sea-level data  
+
+## Exercise #6: Coin flipping and the bootstrap  
+
+## Exercise #7: Performing a simple bootstrap with the sea level data  
+
+## Exercise #8: Climate policy and the DICE model  
+
+# License  

@@ -1,0 +1,59 @@
+---
+title: 'Exercise #4: Determining the optimal height of seawalls: the van Dantzig (1956) example'
+author: 'Patrick Applegate, patrick.applegate@psu.edu'
+output:
+  pdf_document:
+    fig_caption: yes
+---
+
+<!-- This file is part of Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R. -->
+
+<!-- This e-textbook is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. -->
+
+<!-- This e-textbook is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details. -->
+
+<!-- You should have received a copy of the GNU General Public License along with this e-textbook.  If not, see <http://www.gnu.org/licenses/>. -->
+
+# Learning Goals
+
+After completing this exercise, you should be able to
+
+* 
+
+# Introduction
+
+Suppose that we are aware of a potential future danger.  We don't know the magnitude of this danger in advance, but we do know the probability associated with different levels of danger.  We also know the costs of putting protections in place.  These protective measures are imperfect, and we don't want to spend more money on protection than is necessary.  How do we decide how much protection to institute?  
+
+van Dantzig (1956) considered this problem in the context of avoiding damaging floods from storm surges in the Netherlands.  The Netherlands is a small but densely-populated and low-lying country in Europe.  Storm surges occur when low-pressure regions associated with large storms cause local sea level to rise temporarily.  These storm surges can be several meters high.  A particularly large and damaging flood occurred in the Netherlands in 1953, and a team of engineers and mathematicians set to work to design a set of dikes (seawalls) to protect the Netherlands from similar future events.  
+
+The question that van Dantzig (1956) considered was, "How tall should the dikes be?"  It was apparent that the dikes could not be made tall enough to close out all potential future floods.  The floods that had already happened suggested that even bigger ones could occur.  As dikes are built higher, they take up more valuable real estate, so the cost of building very tall dikes becomes unreasonably large.  
+
+So, van Dantzig (1956) chose a different criterion for dike height: Increase the height of the dikes until the construction cost is equal to the damages expected from future floods.  
+
+
+
+This problem has been previously considered, in the context of avoiding damaging floods from large storms, by van Dantzig (1956).  
+
+# Tutorial
+
+## Subsection 1
+
+## Subsection 2
+
+```{r eval = FALSE}
+foo <- 5
+print(foo)
+```
+
+# Exercise
+
+# Questions
+
+1. question 1
+2. question 2
+
+# References
+
+Hansen, J., Ruedy, R., Sato, M., and Lo, K., 2010.  Global surface temperature change.  Reviews of Geophysics 48, RG4004.  
+
+Tufte, E. R., 2001.  The Visual Display of Quantitative Information.  Graphics Press, 197.  
