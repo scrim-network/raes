@@ -1,3 +1,4 @@
+#!/usr/local/bin/Rscript
 # convert_all.R
 # Randy Miller
 # rsm5139@psu.edu
@@ -17,4 +18,4 @@
 
 # ./convert_all.R
 
-render("summary.Rmd", "all")
+rmarkdown::render("summary.Rmd", "all")

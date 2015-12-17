@@ -5,6 +5,8 @@ date: "7 September 2015"
 output:
   pdf_document:
     fig_caption: yes
+  html_document:
+    fig_caption: yes
 ---
 
 <!-- Copyright 2015 by the Authors -->
