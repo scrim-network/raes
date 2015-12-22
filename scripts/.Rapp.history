@@ -1,8 +1,0 @@
-setwd("~/git/raes/scripts/")
-ls()
-list.files(".")
-convert_all.R
-source("convert_all.R")
-install("rmarkdown")
-install.packages("rmarkdown")
-source("convert_all.R")
