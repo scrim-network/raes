@@ -129,7 +129,7 @@ If you haven't already done so, download the .zip file containing the scripts as
 
 <div class="centered">
 
-![Time-dependent output from the optimized DICE model using the built-in parameter set.  See text for discussion.](figures/lab8_plot1.pdf)
+![Time-dependent output from the optimized DICE model using the built-in parameter set.  See text for discussion.](figures/lab8_plot1.png)
 
 </div>
 

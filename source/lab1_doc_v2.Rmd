@@ -46,7 +46,7 @@ In this lab exercise, you'll examine an R script that downloads the data files n
 
 <div class="centered">
 
-![Atmospheric carbon dioxide concentrations (top panel), surface air temperature change (middle panel), and sea level change (bottom panel), between 1900 and ~2015.  All three quantities rise over this period, suggesting a causal relationship between them. See text for discussion.](figures/lab1_plot1.pdf)
+![Atmospheric carbon dioxide concentrations (top panel), surface air temperature change (middle panel), and sea level change (bottom panel), between 1900 and ~2015.  All three quantities rise over this period, suggesting a causal relationship between them. See text for discussion.](figures/lab1_plot1.png)
 
 </div>
 
@@ -80,7 +80,7 @@ Try executing `lab1_sample.R` by clicking on the `Source` button in the upper ri
 
 <div class="centered">
 
-![Contents of `data/lab1_sample_plot1.pdf` after running `lab1_sample.R`.  See text for discussion.](figures/lab1_sample_plot1.pdf)
+![Contents of `data/lab1_sample_plot1.pdf` after running `lab1_sample.R`.  See text for discussion.](figures/lab1_sample_plot1.png)
 
 </div>
 
@@ -176,7 +176,7 @@ Finally, we make a figure and send it to a .pdf file.
 ```{r eval = FALSE}
 # Make a plot of the results.  
 dir.create('figures')
-pdf('figures/lab1_sample_plot1.pdf', width = 4.5, height = 4)
+pdf('figures/lab1_sample_plot1.png', width = 4.5, height = 4)
 par(mfrow = c(2, 1), cex = 0.66)
 plot(law.co2.data[, 1], law.co2.data[, 6], type = 'l', xlim = c(1900, 2020), 
      ylim = c(290, 400), bty = 'n', xlab = 'Time (yr)', 

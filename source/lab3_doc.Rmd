@@ -39,7 +39,7 @@ If you haven't already done so, download the .zip file containing the scripts as
 
 <div class="centered">
 
-![Contents of `figures/lab3_sample_plot1.pdf` after running `lab3_sample.R`.  See text for discussion.](figures/lab3_figure1.pdf)
+![Contents of `figures/lab3_sample_plot1.pdf` after running `lab3_sample.R`.  See text for discussion.](figures/lab3_figure1.png)
 
 </div>
 

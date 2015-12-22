@@ -32,4 +32,4 @@ The book has been written in [R Markdown](http://rmarkdown.rstudio.com), a strai
 
 # Authorship policy
 
-Patrick and Klaus serve as editors. If you contribute ideas, code, or text to the e-textbook, your name will be added to the total list of authors on the cover page. Individual chapters should also have author lists that will be a subset of the total list of authors on the cover page. My name (Patrick Applegate) will remain as ﬁrst author unless someone else contributes more first-author chapters than I have written (presently 10). Following group practice, Klaus will remain as last (senior) author.  
+Patrick and Klaus serve as editors. If you contribute ideas, code, or text to the e-textbook, your name will be added to the wotal list of authors on the cover page. Individual chapters should also have author lists that will be a subset of the total list of authors on the cover page. My name (Patrick Applegate) will remain as first author unless someone else contributes more first-author chapters than I have written (presently 10). Following group practice, Klaus will remain as last (senior) author. 

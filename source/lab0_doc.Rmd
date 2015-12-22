@@ -121,7 +121,7 @@ Open the new `.pdf` file.  It should look like Figure 2, which shows a histogram
 
 <div class="centered">
 
-![Contents of `lab0_fig1.pdf` after executing `lab0_sample.R`.  See text for discussion.](figures/lab0_fig1.pdf)
+![Contents of `lab0_fig1.pdf` after executing `lab0_sample.R`.  See text for discussion.](figures/lab0_fig1.png)
 
 </div>
 

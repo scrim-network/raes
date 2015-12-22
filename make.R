@@ -3,7 +3,7 @@
 # Randy Miller
 # rsm5139@psu.edu
 #
-# Last updated on: 21 December 2015
+# Last updated on: 22 December 2015
 #
 # This script takes all of the textbook files written in R Markdown and
 # converts them to PDF and HTML files. 
@@ -15,7 +15,7 @@
 # RStudio to convert all of the R Mardown files. Therefore, it is designed 
 # to be executed in a Linux environment, or in the R gui.
 
-# Required packages: rmarkdown
+# Required packages: rmarkdown, animation
 # Other required software: pandoc, latex
 
 # From the command line, type the following and press 'Enter':
@@ -52,6 +52,9 @@ render("source/license.Rmd", "pdf_document", output_dir = "pdf", output_file = "
 # Create directory for the resulting HTML documents
 dir.create("html")
 
+# Copy cover photo to html folder
+file.copy("source/figures/cover_with_alexander.png", "html")
+
 # Render the markdown files and place the resulting HTML documents in the html directory
 render("source/cover.Rmd", "html_document", output_dir = "html", output_file = "01_cover.html")
 render("source/summary.Rmd", "html_document", output_dir = "html", output_file = "02_summary.html")
@@ -59,7 +62,7 @@ render("source/contrib_bios.Rmd", "html_document", output_dir = "html", output_f
 render("source/acknowledgements.Rmd", "html_document", output_dir = "html", output_file = "04_acknowledgements.html")
 render("source/intro.Rmd", "html_document", output_dir = "html", output_file = "05_into.html")
 render("source/lab0_doc.Rmd", "html_document", output_dir = "html", output_file = "06_lab0_doc.html")
-render("source/lab1_doc.Rmd", "html_document", output_dir = "html", output_file = "07_lab2_doc.html")
+render("source/lab1_doc_v2.Rmd", "html_document", output_dir = "html", output_file = "07_lab1_doc.html")
 render("source/lab2_doc.Rmd", "html_document", output_dir = "html", output_file = "08_lab2_doc.html")
 render("source/lab3_doc.Rmd", "html_document", output_dir = "html", output_file = "09_lab3_doc.html")
 render("source/lab4_doc.Rmd", "html_document", output_dir = "html", output_file = "10_lab4_doc.html")
@@ -69,3 +72,17 @@ render("source/lab7_doc.Rmd", "html_document", output_dir = "html", output_file 
 render("source/lab8_doc.Rmd", "html_document", output_dir = "html", output_file = "14_lab8_doc.html")
 render("source/license.Rmd", "html_document", output_dir = "html", output_file = "15_license.html")
 
+# Create the scripts directory for the supplemental scripts
+dir.create("scripts")
+
+# Copy the supplemental scripts to the scripts directory
+file.copy("source/scripts/dice.R", "scripts")
+file.copy("source/scripts/lab0_sample.R", "scripts")
+file.copy("source/scripts/lab1_sample.R", "scripts")
+file.copy("source/scripts/lab3_sample.R", "scripts")
+file.copy("source/scripts/lab4_sample.R", "scripts")
+file.copy("source/scripts/lab5_sample.R", "scripts")
+file.copy("source/scripts/lab8_sample.R", "scripts")
+
+# Render the README file
+render("source/README.Rmd", "pdf_document", output_dir = ".")
