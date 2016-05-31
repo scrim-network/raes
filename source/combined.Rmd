@@ -1,0 +1,81 @@
+---
+title: My Report
+output:
+  pdf_document:
+    toc: yes
+---
+
+\newpage
+
+```{r child = 'cover.Rmd'}
+```
+
+\newpage
+
+```{r child = 'summary.Rmd'}
+```
+
+\newpage
+
+```{r child = 'contrib_bios.Rmd'}
+```
+
+\newpage
+
+```{r child = 'acknowledgements.Rmd'}
+```
+
+\newpage
+
+```{r child = 'intro.Rmd'}
+```
+
+\newpage
+
+```{r child = 'lab0_doc.Rmd'}
+```
+
+\newpage
+
+```{r child = 'lab1_doc.Rmd'}
+```
+
+\newpage
+
+```{r child = 'lab2_doc.Rmd'}
+```
+
+\newpage
+
+```{r child = 'lab3_doc.Rmd'}
+```
+
+\newpage
+
+```{r child = 'lab4_doc.Rmd'}
+```
+
+\newpage
+
+```{r child = 'lab5_doc.Rmd'}
+```
+
+\newpage
+
+```{r child = 'lab6_doc.Rmd'}
+```
+
+\newpage
+
+```{r child = 'lab7_doc.Rmd'}
+```
+
+\newpage
+
+```{r child = 'lab8_doc.Rmd'}
+```
+
+\newpage
+
+```{r child = 'license.Rmd'}
+```

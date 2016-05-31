@@ -6,13 +6,13 @@
 # Last updated on: 22 December 2015
 #
 # This script takes all of the textbook files written in R Markdown and
-# converts them to PDF and HTML files. 
+# converts them to PDF and HTML files.
 
 # License: GNU General Public License version 3
 
 # Usage
-# The purpose of this script is to allow users without a local copy of 
-# RStudio to convert all of the R Mardown files. Therefore, it is designed 
+# The purpose of this script is to allow users without a local copy of
+# RStudio to convert all of the R Mardown files. Therefore, it is designed
 # to be executed in a Linux environment, or in the R gui.
 
 # Required packages: rmarkdown, animation
@@ -30,6 +30,9 @@ dir.create("pdf")
 
 # Copy cover photo to pdf folder
 file.copy("source/figures/cover_with_alexander.pdf", "pdf")
+
+# Test line
+render("source/combined.Rmd", "pdf_document", output_dir = "pdf", output_file = "combined.pdf")
 
 # Render the markdown files and place the resulting PDFs in the pdf directory
 render("source/cover.Rmd", "pdf_document", output_dir = "pdf", output_file = "01_cover.pdf")

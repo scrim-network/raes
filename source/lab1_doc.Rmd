@@ -41,7 +41,7 @@ In this lab exercise, you'll examine an R script that downloads the data files n
 
 # Tutorial
 
-We'll start by looking at several Web pages that describe the data we'll be using in this exercise.  As of May 2015, the various data sets displayed in Figure 1 are archived in the following places: 
+We'll start by looking at several Web pages that describe the data we'll be using in this exercise.  As of May 2015, the various data sets displayed in Figure 1 are archived in the following places:
 
 **Table 1.**  Internet sources of data used in Exercise #1 and associated references.  NOAA, National Oceanic and Atmospheric Administration; DOE CDIAC, United States Department of Energy -- Carbon Dioxide Analysis Center; NASA GISS, National Aeronautics and Space Administration -- Goddard Institute for Space Studies; PSMSL, Permanent Service for Mean Sea Level.  
 
@@ -56,7 +56,7 @@ Click on the links in the right-hand column of Table 1 and look at the descripti
 
 ## Executing a sample R script, `lab1_sample.R`
 
-Put the file `lab1_sample.R` in an empty directory.  Open this file in RStudio and look at the contents.  This script carries out the following tasks: 
+Put the file `lab1_sample.R` in an empty directory.  Open this file in RStudio and look at the contents.  This script carries out the following tasks:
 
 * Clears the workspace by deleting any variables already in R and closing any open figures
 * Downloads data files describing atmospheric carbon dioxide concentrations and surface air temperature anomalies
@@ -79,13 +79,13 @@ Try executing `lab1_sample.R` by clicking on the `Source` button in the upper ri
 
 So, now we know what `lab1_sample.R` does: it makes two directories and puts some files in each of them.  In particular, the `figures` directory contains a `.pdf` file with a figure.  But, how does it work, and where is the third panel of Figure 1?  In this section, we'll go through `lab1_sample.R` in detail.  In the Exercise, you'll modify `lab1_sample.R` so that the figure it produces contains all three panels of Figure 1.  
 
-The top few lines of `lab1_sample.R` are comments: 
+The top few lines of `lab1_sample.R` are comments:
 
 ```{r eval = FALSE}
 # lab1_sample.R
 # Patrick Applegate, patrick.applegate@psu.edu
-# 
-# Downloads data on atmospheric carbon dioxide concentration and global mean 
+#
+# Downloads data on atmospheric carbon dioxide concentration and global mean
 # temperature and makes plots of these quantities.  
 ```
 
