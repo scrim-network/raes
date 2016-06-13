@@ -1,0 +1,43 @@
+---
+output: pdf_document
+---
+
+# R scripts to accompany *Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R*, version 1.2
+
+## Introduction
+
+These files are meant to accompany the freely-available textbook *Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R*, version 1.2, edited by Patrick J. Applegate and Klaus Keller.  You can download the book as a `.pdf` file from https://leanpub.com/raes.  
+
+The files in this folder are scripts in the R programming language.  You can download a `.zip` file containing these scripts from http://scrimhub.org/resources/raes/.  
+
+These scripts were written by Patrick J. Applegate with contributions from Ryan L. Sriver, Gregory G. Garner, Alexander Bakker, Richard B. Alley, and Klaus Keller.  
+
+## Necessary software
+
+To run these scripts, you'll need to download and install
+
+* R (https://www.r-project.org/)
+* RStudio (https://www.rstudio.com/products/rstudio/ -- optional, but highly recommended)
+
+Both of these pieces of software will install on Windows, Mac OS X, and some popular Linux distributions.  Installation instructions are provided on the respective software packages' Web sites.  
+
+We tested these scripts using R version 3.3.0 and RStudio version 0.99.902, running under Mac OS X version 10.11.5.  
+
+## Use instructions
+
+To run one of these scripts, 
+
+1. make a new directory
+2. move the script of interest into the new directory
+3. open RStudio
+4. in RStudio, click on File > Open File..., navigate to the directory you created in Step 1, and open the script of interest; the script should appear in RStudio
+5. in RStudio, click on Session > Set Working Directory > To Source File Location
+6. in RStudio, click the Source button in the upper right-hand corner of the Script window
+
+## License
+
+The accompanying scripts are free software: you can redistribute them and/or modify them under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.  
+
+These scripts are distributed in the hope that they will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.  
+
+You should have received a copy of the GNU General Public License along with these scripts. If not, see http://www.gnu.org/licenses/.  
