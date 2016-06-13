@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 README.md
 
 This Github repository is meant to accompany *Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R*, version 1.2 (updated 13 June 2016).  
@@ -16,3 +17,21 @@ Greenhouse gas emissions have caused considerable changes in climate, including 
 
 This work was supported by the National Science Foundation through the Network for Sustainable Climate Risk Management (SCRiM) under NSF cooperative agreement GEO-1240507. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation. Other support was provided by the Center for Climate Risk Management and the Rock Ethics Institute.
 
+=======
+## Compiling This Book  
+
+### Requirements  
+
+_R Packages_  
+
+- R Markdown  
+- animation  
+
+_Other_  
+
+- Pandoc (1.13.1)  
+- pdfTeX (1.40.12)  
+- ghostscript (9.14)  
+
+The __Risk Analysis in the Earth Sciences__ textbook was created using [R Markdown](http://rmarkdown.rstudio.com), which allows for dynamic document creation through the use of markdown syntax and R code. To compile this textbook through a command line interface, type ```./make.R``` from the root directory of the project folder.
+>>>>>>> Stashed changes
