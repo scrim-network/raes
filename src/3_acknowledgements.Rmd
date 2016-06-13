@@ -10,6 +10,8 @@ Most of these exercises were originally developed as part of a course titled [Ri
 
 Katerina Kostadinova designed the cover using a photograph provided by Chris Forest.  
 
+Randy Miller created scripts for merging the parts of the book into a single `.pdf` file and created the Github repository.  
+
 Thomas Patrick Walsh and Naomi Radke made suggestions for improving the text and lab exercises.  
 
 **Patrick Applegate** thanks the students from the Risk Analysis in the Earth Sciences course, Spring 2013 and Spring 2014, for many helpful comments that improved the exercises.  Patrick also thanks AJR for support during the writing of this e-textbook.  

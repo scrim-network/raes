@@ -96,7 +96,7 @@ This book is available from [Leanpub](https://leanpub.com/) at [https://leanpub.
 
 As noted above, most of the exercises presented in this e-textbook ask students to modify existing R scripts.  These R scripts can be downloaded as a `.zip` file from [www.scrimhub.org/raes](www.scrimhub.org/raes).  
 
-The source files for the book are stored on a Github repository at **GITHUB REPOSITORY LOCATION HERE**.  
+The source files for the book are stored in a Github repository at https://github.com/scrim-network/raes.  
 
 ## We welcome your comments and questions
 
