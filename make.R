@@ -51,4 +51,8 @@ file.copy("src/sample_scripts/lab4_sample.R", "scripts")
 file.copy("src/sample_scripts/lab5_sample.R", "scripts")
 file.copy("src/sample_scripts/lab8_sample.R", "scripts")
 
+# Combine the PDFs into a single file
 system("gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=raes_v1p2.pdf pdf/cover_with_alexander.pdf pdf/title_page.pdf pdf/main.pdf")
+
+# Zip the sample scripts directory
+zip("sample_scripts_v1p2.zip", c("scripts/dice.R", "scripts/lab0_sample.R", "scripts/lab1_sample.R", "scripts/lab3_sample.R", "scripts/lab4_sample.R", "scripts/lab5_sample.R", "scripts/lab8_sample.R", "scripts/LICENSE_GPLv3.pdf", "scripts/README.pdf"))
