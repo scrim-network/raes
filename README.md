@@ -35,4 +35,4 @@ _Other_
 - pdfTeX (1.40.12)  
 - ghostscript (9.14)  
 
-The __Risk Analysis in the Earth Sciences__ textbook was created using [R Markdown](http://rmarkdown.rstudio.com), which allows for dynamic document creation through the use of markdown syntax and R code. To compile this textbook through a command line interface, type ```./make.R``` from the root directory of the project folder.
+The __Risk Analysis in the Earth Sciences__ textbook was created using [R Markdown](http://rmarkdown.rstudio.com), which allows for dynamic document creation through the use of markdown syntax and R code. To compile this textbook through a command line interface, type ```./make.R``` from the root directory of the project folder. The book can also be created from within R or RStudio by sourcing the make.R file.
