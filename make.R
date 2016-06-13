@@ -54,4 +54,5 @@ file.copy("src/sample_scripts/lab8_sample.R", "scripts")
 file.copy("src/sample_scripts/LICENSE_GPLv3.pdf", "scripts")
 file.copy("src/sample_scripts/README.pdf", "scripts")
 
-system("pdfunite pdf/cover_with_alexander.pdf pdf/title_page.pdf pdf/main.pdf raes_v1p2.pdf")
+#system("pdfunite pdf/cover_with_alexander.pdf pdf/title_page.pdf pdf/main.pdf raes_v1p2.pdf")
+system("gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=raes_v1p2.pdf pdf/cover_with_alexander.pdf pdf/title_page.pdf pdf/main.pdf raes_v1p2.pdf")
