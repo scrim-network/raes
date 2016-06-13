@@ -16,8 +16,7 @@
 # to be executed in a Linux environment, or in the R gui.
 
 # Required packages: rmarkdown, animation
-# Other required software: pandoc, latex
-# Optional: poppler for the pdfunite command to merge the files
+# Other required software: pandoc, latex, ghostscript
 
 # From the command line, type the following and press 'Enter':
 
@@ -54,5 +53,4 @@ file.copy("src/sample_scripts/lab8_sample.R", "scripts")
 file.copy("src/sample_scripts/LICENSE_GPLv3.pdf", "scripts")
 file.copy("src/sample_scripts/README.pdf", "scripts")
 
-#system("pdfunite pdf/cover_with_alexander.pdf pdf/title_page.pdf pdf/main.pdf raes_v1p2.pdf")
-system("gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=raes_v1p2.pdf pdf/cover_with_alexander.pdf pdf/title_page.pdf pdf/main.pdf raes_v1p2.pdf")
+system("gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=raes_v1p2.pdf pdf/cover_with_alexander.pdf pdf/title_page.pdf pdf/main.pdf")
