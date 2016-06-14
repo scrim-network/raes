@@ -1,4 +1,4 @@
-# Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R**
+# Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R
 
 Edited by Patrick J. Applegate and Klaus Keller
 
