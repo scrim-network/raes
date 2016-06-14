@@ -1,6 +1,6 @@
 # Sources of data files in this folder
 
-These files were downloaded from the following locations on the Web.  All files were accessed on 13 June 2016.  
+These files were downloaded from the following locations on the Web.  All files were accessed on 13 June 2016.  Please download up-to-date versions of these files from the original sources, rather than using the copies archived here.  
 
 `co2_mm_mlo.txt`: NOAA's Earth System Research Laboratory, Global Monitoring Division; http://www.esrl.noaa.gov/gmd/ccgg/trends/  
 
