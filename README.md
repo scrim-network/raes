@@ -8,7 +8,7 @@ Contributions by Patrick J. Applegate, Ryan L. Sriver, Gregory G. Garner, Alexan
 
 This Github repository contains the complete source code needed to generate the freely-available e-textbook, *Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R*, version 1.2 (updated 13 June 2016).  The repository also contains the code examples that accompany the book.  
 
-If you find this material useful, please download a `.pdf` copy of the book from https://leanpub.com/raes.  We use the download counter on this page to track use of the book.  
+If you find this material useful, please download a `.pdf` copy of the book from https://leanpub.com/raes.  We use the download counter on Leanpub to track use of the book.  
 
 The exercise scripts are also available from http://scrimhub.org/resources/raes/.  
 
