@@ -4,11 +4,11 @@
 
 *Patrick Applegate and Klaus Keller*
 
-This Github repository is meant to accompany *Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R*, version 1.2 (updated 13 June 2016).  
+This Github repository contains the complete source code needed to generate the freely-available e-textbook, *Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R*, version 1.2 (updated 13 June 2016).  The repository also contains the code examples that accompany the book.  
 
-Please download a `.pdf` copy of the book from https://leanpub.com/raes.  
+If you find this material useful, please download a `.pdf` copy of the book from https://leanpub.com/raes.  We use the download counter on this page to track use of the book.  
 
-This repository holds the source files for the book, as well as the scripts that make up the exercises.  The exercise scripts are also available from http://scrimhub.org/resources/raes/.  
+The exercise scripts are also available from http://scrimhub.org/resources/raes/.  
 
 We’d like to make Risk Analysis in the Earth Sciences as useful as possible. If you have a comment about the book or a question about one of the exercises, please post an issue to this Github repository. 
 
