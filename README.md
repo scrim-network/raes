@@ -12,7 +12,7 @@ If you find this material useful, please download a `.pdf` copy of the book from
 
 The exercise scripts are also available from http://scrimhub.org/resources/raes/.  
 
-We’d like to make Risk Analysis in the Earth Sciences as useful as possible. If you have a comment about the book or a question about one of the exercises, please post an issue to this Github repository. 
+We’d like to make *Risk Analysis in the Earth Sciences* as useful as possible. If you have a comment about the book or a question about one of the exercises, please post an issue to this Github repository. 
 
 ## Introduction
 
