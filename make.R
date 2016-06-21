@@ -1,9 +1,9 @@
-#!/usr/local/bin/Rscript
+#!/usr/bin/env Rscript
 # make.R
 # Randy Miller
 # rsm5139@psu.edu
 #
-# Last updated on: 13 June 2016
+# Last updated 21 June 2016 by Robert Nicholas <ren10@psu.edu>.
 #
 # This script takes all of the textbook files written in R Markdown and
 # converts them to PDF files.
