@@ -1,0 +1,313 @@
+
+---
+header-includes: \usepackage{gensymb}
+output:
+  pdf_document: default
+  html_document: default
+  fig_caption: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Chapter #8: (DRAFT) Simple sensitivity analyses for a simple sea-level rise model (Tony E. Wong, Kelsey L. Ruckert, Vivek Srikrishnan and Klaus Keller
+
+<!-- Copyright 2019 by the Authors -->
+
+<!-- This file is part of Risk Analysis in the Earth Sciences: A Chapter Manual with Exercises in R. -->
+
+<!-- This e-textbook is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. -->
+
+<!-- This e-textbook is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details. -->
+
+<!-- You should have received a copy of the GNU General Public License along with this e-textbook.  If not, see <http://www.gnu.org/licenses/>. -->
+
+## Learning objectives
+
+After completing this exercise, you should be able to:
+
+- perform sensitivity analyses varying in complexity
+- apply this approach to "real" data (sea level) and use a "real" physical model (Rahmstorf 2007)
+- explain which analysis is most appropriate to a particular model
+
+
+## Introduction
+We often use mathematical models to make predictions or inferences about the way the world works.  These models are almost always a simplification of the more complicated physical system under investigation.  This is because we can almost never take into account every last piece of physics that might possibly affect the outcome of the system.  For example, with the simple sea-level rise model of previous chapters, changes in global mean sea levels are driven by changes in global mean surface temperature.  But there are of course many other factors that might affect the change in sea level from year to year.  These factors might include greenhouse gas emissions, changes in surface air pressure, and changes in land use and groundwater pumping, to name a few.
+
+The model calibration presented in Chapter X yielded estimates of the posterior distributions of model parameters.  These characterize the uncertainty in the parameters, as well as the uncertainty in the quantity those parameters model (sea-level rise, in this case).  But this leaves open the question of how uncertainty in each parameter is related to uncertainty in the model output. In contrast to model calibration, whose aim is to find model parameters which yield a simulation that matches data well, model sensitivity analysis aims to quantify how much influence each model parameter has on the model output.  This will enable us to answer key questions like what are the most important parameters, and how can we quantify this notion of ``importance''?  These questions are quite interrelated to the task of model calibration.  Frequently, a sensitivity analysis and model calibration go hand-in-hand, because a sensitivity analysis can shed light on which parameters need to be calibrated, or by characterizing which parameters and inputs contribute to the overall modeling uncertainty.
+
+Before we launch into things, let us do a bit of preliminary set up. For this tutorial, we will mix a lot of the code blocks in with the text descriptions beause the methods involved are relatively computation-heavy. So, it will be useful to see exactly which code blocks correspond to which stages of the analysis.
+```{r eval=FALSE}
+# Clear away any existing variables or figures.
+rm(list = ls())
+graphics.off()
+
+# Install packages if necessary, and load them.
+# install.packages("lhs")
+# install.packages("compiler")
+library(lhs)
+library(compiler)
+enableJIT(3)
+
+# Make directory for this tutorial
+dir.create("lab_X")
+dir.path <- paste(getwd(), "/lab_X/", sep="")
+
+# Pull the relevant data and model files from SCRiM Git repository
+scrim.git.path <- "https://raw.githubusercontent.com/scrim-network/"
+```
+
+## Global versus local sensitivity analyses
+Local sensitivity analysis methods examine how small perturbations around an input vector affect model output of interest. By contrast, global sensitivity methods examine how the variability in model input parameters (and their interconnections) are linked to variability in  model output. The focus of this chapter is on local and a simple method for global sensitivity analysis. The next chapter will examine a more thorough, but also more computationally expensive, approach for global sensitivity analysis.
+
+Let $x$ represent the vector of model input parameters and let $p$ denote the dimension of the parameter-space (so $x$ is a $p$-dimensional vector). Let $M(x)$ represent the model output when parameters $x$ are used.  Parameter first-order sensitivities are direct influences of variability in a particular parameter, $x_i$, on variability in the model output of interest. Parameter total sensitivities are the influence of variability in a particular parameter, $x_i$, and its interactions with all other parameters, on the variability in the model output.
+
+### One-at-a-time analysis
+As the name implies, a one-at-a-time sensitivity analysis (OAT analysis) involves making perturbations on one parameter at a time, while holding the other model parameters fixed at some default, or control, value. Then, model output sensitivity to each parameter can be estimated from the change in model output that results from a perturbation in each parameter.  Let's give this a try.
+
+First, we will read in the data, and define the model, as in the previous chapters on model calibration. As we have before, we will use the Church and White (2013) data set for global mean sea levels, and the National Oceanic and Atmospheric Administration (NOAA) historical temperature data set.
+```{r eval=FALSE}
+# Sea-level change data
+url <- paste(scrim.git.path, "BRICK/master/data/GMSL_ChurchWhite2011_yr_2015.txt", sep="")
+#download.file(url, paste(dir.path, "GMSL_ChurchWhite2011_yr_2015.txt", sep=""))
+church.data <- read.table("lab_X/GMSL_ChurchWhite2011_yr_2015.txt")
+year.hist <- floor(church.data[ ,1])
+slr.hist <- church.data[ ,2]
+slr.err <- church.data[ ,3]
+
+# Temperature data
+url <- paste(scrim.git.path,
+             "Ruckertetal_SLR2016/master/RFILES/Data/NOAA_IPCC_RCPtempsscenarios.csv",
+             sep="")
+#download.file(url, paste(dir.path, "NOAA_IPCC_RCPtempsscenarios.csv", sep=""))
+temp.data <- read.csv("lab_X/NOAA_IPCC_RCPtempsscenarios.csv")
+temp.hist <- temp.data$Historical.NOAA.temp.
+
+# We only want the years with sea-level data for comparison historical period
+ibeg <- match(year.hist[1], temp.data$Time)
+iend <- match(max(year.hist), temp.data$Time)
+temp.hist <- temp.hist[ibeg:iend]
+
+# Normalize sea level and temperature should be relative to 1951-1980,
+# to be comparable to Rahmstorf's original paper
+ind.norm <- match(1951, year.hist):match(1980, year.hist)
+temp.hist <- temp.hist - mean(temp.hist[ind.norm])
+slr.hist <- slr.hist - mean(slr.hist[ind.norm])
+
+# For projections of SLR, want the RCP8.5 projections from beginning to 2100
+ibeg <- match(year.hist[1], temp.data$Time)
+iend <- match(2100, temp.data$Time)
+temp.proj <- temp.data$Historical.NOAA.temp...RCP.8.5[ibeg:iend]
+year.proj <- temp.data$Time[1:match(2100, temp.data$time)]
+
+# Normalize those relative to 1951-1980 as well.
+ind.norm <- match(1951, year.proj):match(1980, year.proj)
+temp.proj <- temp.proj - mean(temp.proj[ind.norm])
+
+```
+
+We also will load the Rahmstorf (2007) model for global mean sea level (GMSL).
+```{r eval=FALSE}
+# Load the sea-level model (Rahmstorf, 2007)
+url <- paste(scrim.git.path, "BRICK/master/R/gmsl_r07.R", sep="")
+download.file(url, paste(dir.path, "gmsl_r07.R", sep=""))
+source("lab_X/gmsl_r07.R")
+
+# The sea level data, temperature data, and model all have a timestep of one year
+tstep <- 1
+```
+
+Recall that the Rahmstorf (2007) GMSL model has three parameters. They are: $\alpha$ (mm $^\circ$C$^{-1}$), the sensitivity of sea-level changes to changes in temperature; $T_{eq}$ ($^\circ$C), the equilibrium temperature at which we would observe no sea-level change; and $S_0$ (mm), the initial global mean sea level (relative to the 1951-1980 global mean sea level). $S_0$ accounts for the fact that there is uncertainty in our initial condition for running the GMSL model.
+
+Default parameter choices for $\alpha$ and $T_{eq}$ are provided by Rahmstorf (2007) as $\alpha = 3.4$ mm $^\circ$C$^{-1}$ and $T_{eq} = -0.5$ $^\circ$C. A natural default choice for $S_0$ is the first observation of sea level from the Church and White (2013) data set. Let's run the sea level model using those parameter choices and plot the results against the observational data.
+```{r eval=FALSE}
+model0 <- gmsl_r07(sl_temp_sens=3.4, temp_equil=-0.5, sl0=slr.hist[1],
+                   tstep=tstep, temperature_forcing=temp.hist)
+
+plot(year.hist, slr.hist, type='p', col='red', xlab='Year', ylab='Sea level [mm]')
+lines(year.hist, model0, lwd=2)
+legend(1880, 200, c('Model 0','Data'), lty=c(1,NA),
+       pch=c(NA,1), col=c('black','red'), bty='n')
+```
+
+Not too shabby!  But let's see how some other parameter choices might affect our simulation. Our model seems to be biased low, as evidenced by the model simulation *underestimating* the observational data points, so perhaps the modeled sea-level changes need to be *more* sensitive to changes in temperature. To try this, we can increase the $\alpha$ sensitivity parameter, say, by 10%.
+```{r eval=FALSE}
+model1 <- gmsl_r07(sl_temp_sens=3.74, temp_equil=-0.5, sl0=slr.hist[1],
+                   tstep=tstep, temperature_forcing=temp.hist)
+
+plot(year.hist, slr.hist, type='p', col='red', xlab='Year', ylab='Sea level [mm]')
+lines(year.hist, model1, lwd=2)
+legend(1880, 200, c('Model 1','Data'), lty=c(1,NA),
+       pch=c(NA,1), col=c('black','red'), bty='n')
+```
+
+Well now, that looks pretty good! The model does a great job until about 1970, and then starts to overestimate a bit. But we could have also tweaked the equilibium temperature parameter $T_{eq}$. So let's try adjusting that one to obtain a better model simulation, and revert the $\alpha$ parameter back to its default value. We should also modify $T_{eq}$ by 10%, because the scale of the $T_{eq}$ and $\alpha$ parameter values are a bit different.
+```{r eval=FALSE}
+model2 <- gmsl_r07(sl_temp_sens=3.4, temp_equil=-0.55, sl0=slr.hist[1],
+                   tstep=tstep, temperature_forcing=temp.hist)
+
+plot(year.hist, slr.hist, type='p', col='red', xlab='Year', ylab='Sea level [mm]')
+lines(year.hist, model2, lwd=2)
+legend(1880, 200, c('Model 2','Data'), lty=c(1,NA),
+       pch=c(NA,1), col=c('black','red'), bty='n')
+```
+
+There is a lot of overlap between the observational data points and the model simulation, so this also appears to be a reaosnable simulation. Note, however, that a quite small change in $T_{eq}$ of $-0.05 ^\circ$ C has led to a similar change in the modeled sea levels as a change in $\alpha$ of $0.6$ mm $^\circ$C$^{-1}$. The fact that different changes in different parameters affect the model simulation in distinct ways is why we should conduct sensitivity analyses.
+
+So far, we have only examined *qualitative* measures of sensitivity. That is, we looked at the plot of the model output and used the "eyeball metric" to assess the degree to which the model simulation changed as a result of changes we made in the parameters. Pictures are worth a thousand words, but numbers are worth a thousand pictures, so let us define some **metrics** we can use to quantitatively discuss *by how much* a model simulation changes as a result of changes in parameter values.
+
+One intuitive way we could measure sensitivity of the modeled sea-level change to changes in the input parameters is to examine the modeled sea level at a specific point in time, say, 2013 (because that is the most recent year of temperature and sea-level data). Here is a function to extract this potential sensitivity measure:
+```{r eval=FALSE}
+sens_2013 <- function(parameters, temperature_forcing, tstep=1) {
+  # Run the GMSL model with the given parameters and forcing
+  model <- gmsl_r07(sl_temp_sens=parameters[1],
+                    temp_equil=parameters[2],
+                    sl0=parameters[3],
+                    tstep=tstep,
+                    temperature_forcing=temperature_forcing)
+  # Grab and return the sea level from 2013, the last year
+  return(model[length(model)])
+}
+```
+
+We can run the model using its default parameters (Model 0) as well as having made a 10% change in $\alpha$ (Model 1) or a 10% change in $T_{eq}$ (Model 2), and compare how much the 2013 sea level sensitivity is affected.
+```{r eval=FALSE}
+sens_2013_alpha <- c(sens_2013(c(3.4, -0.5, slr.hist[1]), temp.hist, tstep),
+                     sens_2013(c(3.74, -0.5, slr.hist[1]), temp.hist, tstep))
+sens_2013_Teq <- c(sens_2013(c(3.4, -0.5 , slr.hist[1]), temp.hist, tstep),
+                   sens_2013(c(3.4, -0.55, slr.hist[1]), temp.hist, tstep))
+print(diff(sens_2013_alpha))
+print(diff(sens_2013_Teq))
+[1] 21.75218
+[1] 22.61
+```
+
+This small experiment shows that changing the $T_{eq}$ parameter by 10% made a slightly larger difference in the modeled sea level in 2013 than changing the $\alpha$ parameter by 10%.
+
+This analysis, however, has the potential drawback that it does not take into account the fact that the model simulation may have changed a lot between 1880 and 2012, as well as in year 2013. So, we might consider is to use an *integrated* measure of sensitivity, that accounts for how different the perturbed simulation is at all points in time, not just one of them. One such measure is the *l1 distance* between the given model simulation, $\eta$, and some reference simulation $\eta_0$:
+$$S = \sum_{t=1}^N |\eta_t - \eta_{0,t}|,$$
+where the index $t = 1,2, \ldots, N$ runs over each time step of the model simulation. Note that the l1 distance is simply adding up the magnitude of the difference at each time step between the perturbed simulation ($\eta_t$) and the reference simulation ($\eta_{0,t}$). Here is a function to calculate the l1 sensitivity metric, relative to some reference simulation `model_ref`.
+```{r eval=FALSE}
+sens_l1 <- function(parameters, temperature_forcing, model_ref, tstep=1) {
+  # Run the GMSL model with the given parameters and forcing
+  model <- gmsl_r07(sl_temp_sens=parameters[1],
+                    temp_equil=parameters[2],
+                    sl0=parameters[3],
+                    tstep=tstep,
+                    temperature_forcing=temperature_forcing)
+  # Add up the absolute differences between this simulation
+  # and the reference simulation
+  l1 <- sum(abs(model-model_ref))
+  return(l1)
+}
+```
+
+We can test out the l1 sensitivity measure with our two parameter tweaks.  Let's use Model 0 (with the default parameter values) as the reference model.
+```{r eval=FALSE}
+sens_l1_alpha <- sens_l1(c(3.74, -0.5, slr.hist[1]), temp.hist, model0, tstep)
+sens_l1_Teq <- sens_l1(c(3.4, -0.55, slr.hist[1]), temp.hist, model0, tstep)
+print(sens_l1_alpha)
+print(sens_l1_Teq)
+[1] 1029.972
+[1] 1514.87
+```
+
+Now the sensitivity of the model to $T_{eq}$ is really starting to show, when we look at how changing this parameter affects *the entire* simulation, as opposed to only the final year.
+
+There are many other possible choices for a measure of model sensitivity, but for the sake of demonstration and brevity, we will stick to the 2013 sea level and l1 norm here. In practice, you will want to consider carefully what is the most appropriate sensitivity measure for your application and model. This might involve trying a few out, or developing a new one of your own!
+
+### Latin hypercube
+The OAT analysis is an attractive option for computationally expensive models because of its simplicity and low computational cost. The OAT approach, however, misses the opportunity to learn about correlations between parameters.  These correlations mean that knowledge of one parameter could affect what are reasonable values for another parameter.  For example, if the sensitivity $\alpha$ is high, then smaller temperature fluctuations around $T_{eq}$ will cause the same changes in sea level as larger fluctuations around $T_{eq}$ with a lower sensitivity $\alpha$.
+
+One option to examine how simultaneously changing all three parameters will affect the model simulation is to simply draw random samples for all three and to run the model with those parameter samples. But, this has the unfortunate side effect of relying on random chance to get good coverage of all possible parameter combinations. For example, consider the following scenario. For the sake of clarity, we will only consider varying $\alpha$ and $T_{eq}$ for now. Let's draw 10 sets of $\alpha$ and $T_{eq}$ and see how we do.
+
+```{r eval=FALSE}
+set.seed(11)
+n <- 10
+alphas <- runif(min=0, max=5, n=n)
+Teqs <- runif(min=-1.5, max=0.5, n=n)
+plot(alphas, Teqs, xlim=c(0,5), ylim=c(-1.5,0.5),
+     xlab=expression(alpha), ylab=expression(T[eq]))
+```
+
+We can see in the resulting plot of our parameter samples that there is a noticable gap, namely for $\alpha$ between about 3 and 4. It just so happens that this is where the default model parameters lie, so this is especially troubling! One approach to overcome this possible pitfall is to use a **stratified sampling** strategy. In a nutshell, stratified sampling is when we divide our sample space up into different regions, or **strata**, and ensure that we sample adequately from each strata. We can draw a **Latin hypercube sample** using $n=10$ strata by dividing each of the $\alpha$ and $T_{eq}$ regions up into ten equal-width strata, thus creating a $10 \times 10$ grid out of our sample space. So the sample space for $\alpha$ is divided up into one strata between 0 and 0.5, another between 0.5 and 1, and so on, and similarly for $T_{eq}$. Then, we make sure to sample at least one parameter value from each of its strata. A random Latin hypercube sampling strategy samples the parameters *within* each strata uniform randomly.
+
+The `randomLHS` function from the `lhs` package will allow us to draw a random Latin hypercube sample. Note that the samples returned are always sampled from the range 0 to 1, so we must scale our parameter values up to the given ranges for $\alpha$ and $T_{eq}$.
+```{r eval=FALSE}
+set.seed(11)
+# Draw a Latin hypercube sample with k=2 parameters and n samples
+parameters <- randomLHS(k=2, n=n)
+# Scale the parameters
+alphas <- parameters[,1]*5
+Teqs <- parameters[,2]*2 - 1.5
+# Make a scatter plot of the parameter samples
+plot(alphas, Teqs, xlim=c(0, 5), ylim=c(-1.5, 0.5),
+     xlab=expression(alpha), ylab=expression(T[eq]))
+```
+
+No gaps there! It is still possible if we do not use enough strata that the Latin hypercube sample would leave some gaps in the parameter space; in practice, we will use many more than just ten samples.
+
+So let's generate a Latin hypercube sample using 1,000 sampled pairs of parameters $(\alpha, T_{eq})$. We could, of course, also vary the initial condition $S_0$ as an uncertain parameter, but the analysis will be easier to visualize in three dimensions, with only two parameters and a sensitivity measure. We can visualize the results from the Latin hypercube sensitivity analysis as a plot of the contours of the 2013-sea level sensitivity measure surface, in the $\alpha-T_{eq}$ plane.
+```{r eval=FALSE}
+set.seed(11)
+# draw parameters
+n <- 1000
+parameters <- randomLHS(k=2, n=n)
+# scale the parameters appropriately
+alphas <- parameters[,1] <- parameters[,1]*5
+Teqs <- parameters[,2] <- parameters[,2]*2 - 1.5
+# create an array to store all of the necessary parameters, including S0
+parameters <- cbind(parameters, rep(slr.hist[1], n))
+# run the model with Latin hypercube parameters, and calculate sensitivity measure
+sens_lhs <- sapply(1:n, function(s) sens_2013(parameters[s,], temp.hist, tstep))
+# interpolate the irregular results to a grid
+fld <- interp(alphas,Teqs,sens_lhs)
+# make a contour plot
+contour(fld, xlab=expression(alpha), ylab=expression(T[eq]))
+```
+
+We see that around $T_{eq} \approx 0$, the contours are relatively flat in the $\alpha$ direction, which we can interpret to mean that when $T_{eq} \approx 0$, the model is not particularly sensitive to changes in $\alpha$. When $T_{eq}$ is farther from 0, however, we see that changes in $\alpha$ lead to increasingly large changes in the sensitivity measure.  We can also see the intuitively reasonable result that as the temperature sensitivity $\alpha$ increases, the model becomes increasingly sensitive to changes in $T_{eq}$.
+
+
+## Exercises
+*Part 1.*
+Perform the one-at-a-time sensitivity analysis for all three parameters of the `gmsl_r07` model. Use the 2013 sea level as the sensitivity measure, and use perturbations of $\pm 1, 2, 5, 10,$ and $20$% for each parameter to fill in the table below to compare the results. To make the comparisons as clear as possible, compute the sensitivities as the difference between the simulation using the perturbed parameters and the reference simulation.
+
+As a nice bonus challenge, write some computer code to calculate the sensitivities to populate this results table. This code will be useful to recycle for Part 2.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c | c c c c c c c c c c c}
+Parameter & -20\% & -10\% & -5\% & -2\% & -1\% & Reference & +1\% & +2\% & +5\% & +10\% & +20\% \\ [0.5ex]
+\hline
+$\alpha$ &   &   &   &   &   & 0 &   &   &   &   &   \\
+$T_{eq}$ &   &   &   &   &   & 0 &   &   &   &   &   \\
+$S_0$    &   &   &   &   &   & 0 &   &   &   &   &   \\ [1ex]
+\end{tabular}
+\end{table}
+
+*Part 2.*
+Repeat the experiment of Part 1, but use as a sensitivity measure the l1 distance between the perturbed simulation and the reference simulation.
+
+*Part 3.*
+Perform a Latin hypercube sample sensitivity experiment, and include the initial sea level parameter $S_0$ as well as $\alpha$ and $T_{eq}$. Use samples of size 10, 50, 100, 500, 1000, 5000, 10000, 50000, and 100000 simulations.
+
+**TW note: need to play around with this more and determine what are good suggested sample sizes**
+
+
+
+## Questions
+1. In light of the results from Exercises Parts 1 and 2, how do changes of varying sizes in the different parameters affect the model simulation in different ways? Be specific about the *sign* of changes too (i.e., whether a change in a parameter increased or decreased the sensitivity measure).
+
+2. How do the results for the one-at-a-time and the Latin hypercube analyses compare? Do they agree or disagree on the order of importance of parameters? Does the agreement/ordering depend on the sensitivity measure used?
+
+3. In Exercises Part 1, you used the 2013 sea level as a sensitivity measure, and computed the actual difference between this modeled sea level using one-at-a-time perturbed parameters, and a reference simulation. Can you think of any particular benefits to using the *actual* difference as opposed to the *absolute* difference in sea levels?
+
+4. Based on the results of Exercise Part 4, about how many samples are needed in the Latin hypercube analysis in order to obtain stable results for the sensitivity surfaces? In other words, is there some number of samples beyond which we do not observe noticeable shifts in the contour plots of the sensitivity measure as a function of parameter pairs?
+
+## References
+
+Church, J. A. and White, N. J. 2011. Sea-Level Rise from the Late 19th to the Early 21st Century. Surv Geophys, 32, 585-602. Available online at https://link.springer.com/article/10.1007/s10712-011-9119-1.
+
+Rahmstorf, S. 2007. A Semi-empirical approach to projecting future sea-level rise. Science 315, 368–370. Available online at http://science.sciencemag.org/content/315/5810/368.

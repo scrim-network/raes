@@ -1,0 +1,9 @@
+---
+header-includes: \usepackage{gensymb}
+output:
+  pdf_document: default
+  html_document: default
+  fig_caption: yes
+---
+
+# Chapter #9: Van Dantzig (1956) revisited: adaptation under sea-level rise uncertainty (Vivek Srikrishnan)
