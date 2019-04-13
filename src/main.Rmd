@@ -38,50 +38,60 @@ $\pagebreak$
 
 $\pagebreak$
 
-```{r child = "5_lab0_r_basics.Rmd"}
+```{r child = "5_chap0_r_basics.Rmd"}
 ```
 
 $\pagebreak$
 
-```{r child = "6_lab1_plotting_time_series.Rmd"}
+```{r child = "6_chap1_plotting_time_series.Rmd"}
 ```
 
 $\pagebreak$
 
-```{r child = "7_lab2_normal_distribution.Rmd"}
+```{r child = "7_chap2_normal_distribution.Rmd"}
 ```
 
 $\pagebreak$
 
-```{r child = "8_lab3_other_distributions.Rmd"}
+```{r child = "8_chap3_other_distributions.Rmd"}
 ```
 
 $\pagebreak$
 
-```{r child = "9_lab4_van_dantzig.Rmd"}
+```{r child = "9_chap4_van_dantzig.Rmd"}
 ```
 
 $\pagebreak$
 
-```{r child = "10_lab5_curve_fitting.Rmd"}
+```{r child = "10_chap5_curve_fitting.Rmd"}
 ```
 
 $\pagebreak$
 
-```{r child = "11_lab6_coin_bootstrap.Rmd"}
+```{r child = "11_chap6_coin_bootstrap.Rmd"}
 ```
 
 $\pagebreak$
 
-```{r child = "12_lab7_sea_level_bootstrap.Rmd"}
+```{r child = "12_chap7_sea_level_bootstrap.Rmd"}
 ```
 
 $\pagebreak$
 
-```{r child = "13_lab8_dice.Rmd"}
+```{r child = "13_chap8_oat_sensitivity.Rmd"}
 ```
 
 $\pagebreak$
 
-```{r child = "14_license.Rmd"}
+```{r child = "14_chap9_van_dantzig_uncertain.Rmd"}
+```
+
+$\pagebreak$
+
+```{r child = "15_chap10_values.Rmd"}
+```
+
+$\pagebreak$
+
+```{r child = "16_license.Rmd"}
 ```
