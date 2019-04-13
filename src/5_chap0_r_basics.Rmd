@@ -4,11 +4,11 @@ output:
     fig_caption: yes
 ---
 
-# Lab #0: Learning the basics of R (Patrick J. Applegate)
+# Chapter #0: Learning the basics of R (Patrick J. Applegate)
 
 <!-- Copyright 2015 by the Authors -->
 
-<!-- This file is part of Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R. -->
+<!-- This file is part of Risk Analysis in the Earth Sciences: A Chapter Manual with Exercises in R. -->
 
 <!-- This e-textbook is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. -->
 

@@ -4,11 +4,11 @@ output:
     fig_caption: yes
 ---
 
-# Lab #3: Other probability distributions and random sampling (Patrick J. Applegate)
+# Chapter #3: Other probability distributions and random sampling (Patrick J. Applegate)
 
 <!-- Copyright 2015 by the Authors -->
 
-<!-- This file is part of Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R. -->
+<!-- This file is part of Risk Analysis in the Earth Sciences: A Chapter Manual with Exercises in R. -->
 
 <!-- This e-textbook is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. -->
 
@@ -154,7 +154,7 @@ Change your new script so that it generates random draws from each the following
 
 * (continuous) [uniform distribution](https://en.wikipedia.org/wiki/Uniform_distribution_(continuous))
 * [lognormal distribution](https://en.wikipedia.org/wiki/Log-normal_distribution)
-* [triangular distribution](https://en.wikipedia.org/wiki/Triangular_distribution) (you'll need the `triangle` package to work with this distribution; check Lab #2 for a reminder about how to install and load packages)
+* [triangular distribution](https://en.wikipedia.org/wiki/Triangular_distribution) (you'll need the `triangle` package to work with this distribution; check Chapter #2 for a reminder about how to install and load packages)
 * [exponential distribution](https://en.wikipedia.org/wiki/Exponential_distribution)
 
 To carry out this task for one of the distributions above, you'll need to
