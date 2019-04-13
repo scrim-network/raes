@@ -1,9 +1,12 @@
 ---
-output: 
+output:
     pdf_document:
         toc: true
         toc_depth: 3
         fig_caption: true
+bibliography: raes.bib
+csl: american-geophysical-union.csl
+link-citations: true
 ---
 
 <!-- Copyright 2015 by the Authors -->
@@ -90,6 +93,13 @@ $\pagebreak$
 
 ```{r child = "15_chap10_values.Rmd"}
 ```
+
+$\pagebreak$
+
+# References
+
+<div id="refs"></div>
+
 
 $\pagebreak$
 

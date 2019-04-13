@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE)
 After completing this exercise, you should be able to:
 
 - perform sensitivity analyses varying in complexity
-- apply this approach to "real" data (sea level) and use a "real" physical model (Rahmstorf 2007)
+- apply this approach to "real" data (sea level) and use a "real" physical model [@Rahmstorf2007-sh]
 - explain which analysis is most appropriate to a particular model
 
 
@@ -66,7 +66,7 @@ Let $x$ represent the vector of model input parameters and let $p$ denote the di
 ### One-at-a-time analysis
 As the name implies, a one-at-a-time sensitivity analysis (OAT analysis) involves making perturbations on one parameter at a time, while holding the other model parameters fixed at some default, or control, value. Then, model output sensitivity to each parameter can be estimated from the change in model output that results from a perturbation in each parameter.  Let's give this a try.
 
-First, we will read in the data, and define the model, as in the previous chapters on model calibration. As we have before, we will use the Church and White (2013) data set for global mean sea levels, and the National Oceanic and Atmospheric Administration (NOAA) historical temperature data set.
+First, we will read in the data, and define the model, as in the previous chapters on model calibration. As we have before, we will use the @Church2011-bj data set for global mean sea levels, and the National Oceanic and Atmospheric Administration (NOAA) historical temperature data set.
 ```{r eval=FALSE}
 # Sea-level change data
 url <- paste(scrim.git.path, "BRICK/master/data/GMSL_ChurchWhite2011_yr_2015.txt", sep="")
@@ -107,7 +107,7 @@ temp.proj <- temp.proj - mean(temp.proj[ind.norm])
 
 ```
 
-We also will load the Rahmstorf (2007) model for global mean sea level (GMSL).
+We also will load the @Rahmstorf2007-sh model for global mean sea level (GMSL).
 ```{r eval=FALSE}
 # Load the sea-level model (Rahmstorf, 2007)
 url <- paste(scrim.git.path, "BRICK/master/R/gmsl_r07.R", sep="")
@@ -118,9 +118,9 @@ source("lab_X/gmsl_r07.R")
 tstep <- 1
 ```
 
-Recall that the Rahmstorf (2007) GMSL model has three parameters. They are: $\alpha$ (mm $^\circ$C$^{-1}$), the sensitivity of sea-level changes to changes in temperature; $T_{eq}$ ($^\circ$C), the equilibrium temperature at which we would observe no sea-level change; and $S_0$ (mm), the initial global mean sea level (relative to the 1951-1980 global mean sea level). $S_0$ accounts for the fact that there is uncertainty in our initial condition for running the GMSL model.
+Recall that the @Rahmstorf2007-sh GMSL model has three parameters. They are: $\alpha$ (mm $^\circ$C$^{-1}$), the sensitivity of sea-level changes to changes in temperature; $T_{eq}$ ($^\circ$C), the equilibrium temperature at which we would observe no sea-level change; and $S_0$ (mm), the initial global mean sea level (relative to the 1951-1980 global mean sea level). $S_0$ accounts for the fact that there is uncertainty in our initial condition for running the GMSL model.
 
-Default parameter choices for $\alpha$ and $T_{eq}$ are provided by Rahmstorf (2007) as $\alpha = 3.4$ mm $^\circ$C$^{-1}$ and $T_{eq} = -0.5$ $^\circ$C. A natural default choice for $S_0$ is the first observation of sea level from the Church and White (2013) data set. Let's run the sea level model using those parameter choices and plot the results against the observational data.
+Default parameter choices for $\alpha$ and $T_{eq}$ are provided by @Rahmstorf2007-sh as $\alpha = 3.4$ mm $^\circ$C$^{-1}$ and $T_{eq} = -0.5$ $^\circ$C. A natural default choice for $S_0$ is the first observation of sea level from the @Church2011-bj data set. Let's run the sea level model using those parameter choices and plot the results against the observational data.
 ```{r eval=FALSE}
 model0 <- gmsl_r07(sl_temp_sens=3.4, temp_equil=-0.5, sl0=slr.hist[1],
                    tstep=tstep, temperature_forcing=temp.hist)
@@ -305,9 +305,3 @@ Perform a Latin hypercube sample sensitivity experiment, and include the initial
 3. In Exercises Part 1, you used the 2013 sea level as a sensitivity measure, and computed the actual difference between this modeled sea level using one-at-a-time perturbed parameters, and a reference simulation. Can you think of any particular benefits to using the *actual* difference as opposed to the *absolute* difference in sea levels?
 
 4. Based on the results of Exercise Part 4, about how many samples are needed in the Latin hypercube analysis in order to obtain stable results for the sensitivity surfaces? In other words, is there some number of samples beyond which we do not observe noticeable shifts in the contour plots of the sensitivity measure as a function of parameter pairs?
-
-## References
-
-Church, J. A. and White, N. J. 2011. Sea-Level Rise from the Late 19th to the Early 21st Century. Surv Geophys, 32, 585-602. Available online at https://link.springer.com/article/10.1007/s10712-011-9119-1.
-
-Rahmstorf, S. 2007. A Semi-empirical approach to projecting future sea-level rise. Science 315, 368–370. Available online at http://science.sciencemag.org/content/315/5810/368.

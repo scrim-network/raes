@@ -4,11 +4,11 @@ output:
     fig_caption: yes
 ---
 
-# Lab #6: Coin flipping and the bootstrap (Patrick J. Applegate and Klaus Keller)
+# Chapter #6: Coin flipping and the bootstrap (Patrick J. Applegate and Klaus Keller)
 
 <!-- Copyright 2015 by the Authors -->
 
-<!-- This file is part of Risk Analysis in the Earth Sciences: A Lab Manual with Exercises in R. -->
+<!-- This file is part of Risk Analysis in the Earth Sciences: A Chapter Manual with Exercises in R. -->
 
 <!-- This e-textbook is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. -->
 
@@ -96,7 +96,7 @@ Examine the `help()` file for `sample()`; can you see why the arguments `x`, `si
 
 ## Exercise
 
-*Part 1.*  Using the second code block above and what you learned about `for` loops in Lab #2, write an R script that
+*Part 1.*  Using the second code block above and what you learned about `for` loops in Chapter #2, write an R script that
 
 * generates `n.boot <- 10^3` bootstrap replicates of the ten flips stored in `ht.data`, above
 * calculates a $c$ value for each bootstrap replicate, and stores these $c$ values in a vector `c.vals` (you should define this vector *before* the `for` loop and use the loop's counter variable to save each new value of $c$ in a different element of `c.vals`)
