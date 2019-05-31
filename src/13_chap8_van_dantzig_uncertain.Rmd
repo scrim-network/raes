@@ -1,0 +1,175 @@
+---
+header-includes: \usepackage{gensymb}
+output:
+  pdf_document: default
+  html_document: default
+  fig_caption: yes
+---
+
+# Chapter #8: Van Dantzig (1956) revisited: adaptation under sea-level rise uncertainty (Vivek Srikrishnan and Klaus Keller)
+
+## Learning objectives
+
+After completing this chapter, you should be able to:
+
+  * estimate uncertainties in parameters based on bootstrapped realizations of data
+  * perform a decision-making procedure which minimizes expected costs under uncertainty
+
+## Introduction
+
+In Chapter #4, we carried out the @Van_Dantzig1956-qp approach to finding the optimal height of flood protection structures. We were able to identify the dike height that minimized the total costs from dike construction and future flooding under the assumption that there was no sea-level rise. As we saw in Chapter #5, however, sea levels have risen over the last two centuries [@Jevrejeva2008-zw; @Jevrejeva2014-my] and are expected to continue to rise in the future [@Pfeffer2008-uq]. The precise amount of future sea-level rise is uncertain, but decisions about how to protect against changing flood risks need to be made before these uncertainties are resolved.
+
+How can we account for uncertainty in future sea-level rise when making flood protection decisions? First, we need to characterize this future uncertainty. In Chapter #5, we fit a second-order polynomial to sea level data to estimate the trend in past sea-level rise. This fit would allow us to project the future rate of sea levels, but we did not characterize the uncertainties associated with the polynomial coefficients. As we noted in Chapter #6, the observed record of sea levels is relatively short, and, when thought of as a stochastic process, consists of only one realization! The bootstrap, which we applied to sea level data in Chapter #7, is a useful technique for characterizing uncertainties when data is relatively limited.
+
+In this chapter, we'll revisit the @Van_Dantzig1956-qp analysis given uncertainty about future sea-level rise trends. This will allow us identify the dike height which minimizes the expected total costs in this framework. We note that the same caveats apply as in Chapter #7, so that is likely that the sea-level rise projections that you will work with are too low, and the associated uncertainties are unlikely to be accurate (see Exercise #1).
+
+## Estimating parameter uncertainties with the bootstrap
+
+Ultimately, sea-level rise adaptation decisions are made in response to local conditions. Instead of the global sea-level data used in Chapter #5, we will use local annual-mean data from the [Delfzijl](https://en.wikipedia.org/wiki/Delfzijl) tide gauge in the Netherlands. One extra step is that we will "normalize" the data relative to the sea level mean from 1986-2005, which is how the IPCC normalizes sea levels. Normalization, which in this case refers to subtracting off the 1986-2005 mean from each observation, is done to provide a common baseline for anomalies relative to that baseline. This emphasizes degrees of change, rather than absolute values.
+
+```{r eval = FALSE}
+# Create a directory called data if it doesn't exist and download a file into it.
+if (!dir.exists('data')) {
+  dir.create("data")
+}
+download.file("https://www.psmsl.org/data/obtaining/rlr.annual.data/24.rlrdata",
+              destfile="data/delfzijl-sl.txt")
+
+# Read in the information from the downloaded file.
+sl.data <- read.table("data/delfzijl-sl.txt", sep=";", skip = 0, header = FALSE)
+
+# Extract two key vectors from sl.data.
+# t, time in years
+# obs.sl, global mean sea level in mm
+t <- sl.data[, 1]
+obs.sl <- sl.data[, 2]
+# normalize sea level
+obs.sl <- obs.sl - mean(obs.sl[t %in% 1986:2005])
+```
+
+As in Chapter #5, we will use R's `optim()` function to find the free parameters which minimize the root mean square error (RMSE). You can re-use the `sl.rmse()` function which you wrote while reading that chapter. Then use `optim()` to find the parameters which best fit the data. You should get an best-fit RMSE of `[1] 40.49095`. Next, plot the resulting on top of the data to visually examine the fit.
+
+```{r echo = FALSE, fig.cap = "Best-fit quadratic curve (blue) to the Delfzijl sea-level anomaly data."}
+knitr::include_graphics("figures/lab8_plot1.pdf")
+```
+
+Repeating the analysis from Exercise #1 in Chapter #7, set the seed using `set.seed(1)` (to ensure that your results are reproducible) and generate `n.boot = 10^3` bootstrap realizations and parameter samples.
+
+```{r echo = FALSE, fig.cap = "Parameter histograms from 1000 bootstrap estimates. The best-fit values for each parameter are shown as red lines."}
+knitr::include_graphics("figures/lab8_plot2.pdf")
+```
+
+## Projecting future sea levels
+
+These bootstrapped curve fits allow us to quantify uncertainty in future sea-level rise trends. However, it's not only the sea-level rise trend that affects future flooding risks! As we have seen, the observed residuals from the trend can have magnitudes of 10 centimeters. One way of accounting for this resolved variability is to add bootstapped residuals back onto the trend. As in Chapter #7, this approach assumes that the residuals are heteroskedastic, and so might underestimate the true levels of future risk. The following code will create a matrix of projections to 2100, with each row corresponding to a bootstrap ensemble member and each column corresponding to a year. It assumes that the vector of residuals from the best-fit quadratic is named `resids`. Note that you could also include this code in the previous `for` loop, where you obtained each bootstrapped curve fit.
+
+```{r eval=FALSE}
+# Generate projections for sea-level rise trend
+# yrs, time in years
+yrs <- 2018:2100
+# sl.proj, sea-level rise projections in mm (relative to 2000 mean sea level)
+proj.sl <- matrix(NA, ncol=length(yrs), nrow=n.boot)
+# For each bootstrap realization, generate projections
+for (i in 1:n.boot) {
+  # Project the trend over the future horizon
+  proj.sl[i, ] <- a.boot[i] * (yrs - t.0.boot[i])^2 + b.boot[i] * (yrs - t.0.boot[i]) + c.boot[i]
+  # Sample vector of residuals
+  boot.resids <- sample(resids, size=length(yrs), replace=TRUE)
+  # Add the residual samples to the trend
+  proj.sl[i, ] <- proj.sl[i, ] + boot.resids
+}
+```
+
+## Decision analysis under uncertainty
+
+One of the key estimates in the @Van_Dantzig1956-qp analysis we conducted in Chapter #4 was the expected damage in a single year. Following @Van_Dantzig1956-qp, we assumed that the annual maximum water level followed the same exponential distribution in each year, and computed the expected damage based on this distribution. In this chapter, we have used the bootstrap to generate projected distributions of maximum water levels for each year in the planning horizon. These projections let us compute a Monte Carlo approximation to the expected probability of flooding by calculating the fraction of realizations which exceed a particular dike height.
+
+As we do not have a closed-form expression for the probability of flooding, we will proceed by using a grid of dike heights. We then loop over each height and compute the probability of exceedance. Finally, for each height, we calculate the total expected cost associated with each height by calculating the investment to build the dike to that height and the expected damages. This allows us to identify the height which minimizes the total expected cost.
+
+```{r eval=FALSE}
+# Construct a grid of dike heights and compute the total expected costs for each.
+# Constants from Van Dantzig (1956)
+V = 10^10        # guilders; value of goods threatened by flooding
+delta = 0.04      # unitless; discount rate
+I_0 = 0           # guilders; initial cost of building dikes
+k = 42 * 10^6     # guilders/m; cost of raising the dikes by 1 m
+
+# Set up the dike height grid (in m, by 1cm)
+H <- seq(0, 3, by=0.01) # grid from 0 to 3 m
+# Set up storage for investment costs and expected damages
+I <- numeric(length(H))
+L <- numeric(length(H))
+L_yr <- matrix(nrow=length(H), ncol=length(yrs))
+# Loop over hts and compute the investment cost and expected damages
+for (i in 1:length(H)) {
+  I[i] <- I_0 + k * H[i]
+  for (j in 1:length(yrs)) {
+    ex_prob <- sum(proj.sl[, j] / 1000 > H[i]) / n.boot
+    L_yr[i,j] <- V * ex_prob * (1  +delta)^{-(j - 1)}
+  }
+  L[i] <- sum(L_yr[i, ])
+}
+# Compute total expected costs
+C <- I + L
+# Make a plot. The lowest point on the C curve is the best value for H
+# (relative to the 1986-2005 sea-level mean). The damages associated with the
+# lowest few values make the rest of the plot hard to see, so we'll limit
+# the y-axis to displaying 1 billion guilders.
+plot(H, L, type = "l", col = "red", xlab = "Dike height increase H (m)",
+     ylab = "Cost (guilders)", bty = "n", ylim=c(0, 1e9))
+lines(H, I, col = "blue")
+lines(H, C, col = "black", lwd = 2)
+
+# Add a point indicating the minimum.
+min_C = C[which.min(C)]
+min_H = H[which.min(C)]
+points(min_H, min_C, pch = 16)
+
+# Print which height minimizes C.
+print(min_H)
+```
+
+```{r echo = FALSE, fig.cap = "Expected total future damages due to flooding at different dike heights $L(H)$ (red curve), the costs of building dikes at different heights $I(H)$ (blue curve), and their sum $C(H)$ (black curve). The minimum point on the black curve indicates the optimal dike height."}
+knitr::include_graphics("figures/lab8_plot3.pdf")
+```
+
+## Exercises
+
+*Part 1.* Copy the costs `C` from the tutorial into a different object (use a command like `C_tut <- C`). Repeat the above decision analysis using only the best curve fit estimates (but keep using the bootstrapped residuals to generate projections of future sea levels). What is the optimal height?
+
+*Part 2.* Using your saved cost calculations, what are the expected costs associated with the height obtained in Part 1? What is the difference between this expected cost and the minimal cost in your saved cost vector? This is an example of the [expected value of including uncertainty (EVIU)](https://en.wikipedia.org/wiki/Expected_value_of_including_uncertainty).
+
+*Part 3.* One way of accounting for autocorrelations when bootstrapping is sampling contiguous blocks of data, rather than individual data points (this is called the block bootstrap). Make a copy of `lab9_sample.R` by saving it under a new name. Modify this new script to split the data into blocks and sample these blocks. For example, instead of sampling the residuals directly, divide the indices of the residual vector into `n=10` blocks, and sample those.
+
+```{r eval=FALSE}
+# Divide the indices of the residual vector into n=10 blocks
+n <- 10
+bstart <- seq(1, length(resids), by=n)
+# Sample those indices. We'll need a number of samples equal
+# to the ceiling of the length of the yrs vector divided by
+# the block length.
+nsample <- ceiling(length(yrs)/n)
+bidx <- sample(bstart, size=nsample, replace=TRUE)
+# Then append the blocks together. At the end, we'll truncate
+# the final block to include only the final three
+# (length(yrs) modulo n) required residuals.
+# First, we should allocate memory to the bootstrap vector.
+boot.resids <- numeric(length(yrs))
+# Now loop over each sample in bidx (except for the last one)
+# and place the appropriate residuals in the bootstrap vector. rs
+# How did we obtain the indices for each vector?
+for (i in 1:(nsample-1)) {
+  boot.resids[((i-1)*n+1):(i*n)] <- resids[bidx[i]:(bidx[i]+n-1)]]
+}
+# For the last three residuals, the indices are different.
+boot.resids[(length(yrs)-2):length(yrs)] <- resids[bidx[nsample]:bidx[nsample]+2]
+```
+
+Repeat the rest of the analysis. Do you get a different optimal height under uncertainty?
+
+## Questions
+1. Try repeating the bootstrap and decision-making analysis for `n.boot = 1e4` samples. Do you get the same value? If not, around what number of samples is required for the optimal height to stabilize?
+
+2. The optimal dike value that we obtained in this chapter was smaller than the optimal dike value in Chapter #4. Why do you think that this is? Plot the exceedance probabilities from Chapter #4 and from this chapter and compare them.
+
+3. In Part 3, we accounted to some degree for autocorrelation in the residual structure. Are there other types of heteroscedasticity that might influence the optimal decision that we found? How could we start accounting for them?
