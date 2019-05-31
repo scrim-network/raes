@@ -9,6 +9,8 @@ csl: american-geophysical-union.csl
 link-citations: true
 header-includes:
   \usepackage{setspace}\doublespacing
+  \usepackage{eso-pic,graphicx,transparent}
+
 ---
 
 <!-- Copyright 2015 by the Authors -->
@@ -25,6 +27,15 @@ $\pagebreak$
 
 ```{r child = "1_summary.Rmd"}
 ```
+
+
+\AddToShipoutPictureFG{
+  \AtPageCenter{% or \AtTextCenter
+    \makebox[0pt]{\rotatebox[origin=c]{45}{%
+      \scalebox{5}{\texttransparent{0.3}{DRAFT}}%
+    }}
+  }
+}
 
 $\pagebreak$
 
