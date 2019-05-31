@@ -18,7 +18,7 @@ output:
 
 ## Learning objectives
 
-After completing this exercise, you should be able to
+After completing this chapter, you should be able to
 
 * describe the @Van_Dantzig1956-qp approach to estimating the optimal height of flood protection structures (dikes)
 * explain how discounting works and describe the effects of discounting rates on the results of cost-benefit analyses
@@ -38,7 +38,7 @@ The minimum-total-cost criterion makes a number of assumptions, some of which we
 
 ### An important note
 
-Carrying out this exercise will not prepare you to design flood protection structures.  The presentation of the material in this exercise has been simplified for pedagogical reasons, and this material should only be applied to "real" problems after additional training.  The authors and editors of this e-textbook specifically disclaim any liability for damages associated with the use of the material presented in this exercise.
+Completing this chapter will not prepare you to design flood protection structures.  The presentation of the material in this chapter has been simplified for pedagogical reasons, and this material should only be applied to "real" problems after additional training.  The authors and editors of this textbook specifically disclaim any liability for damages associated with the use of the material presented in this exercise.
 
 ### Dike construction costs
 
@@ -97,9 +97,9 @@ abline(h = 1/ delta, lty = 2, lwd = 2, col = "gray")
 
 Recall that @Van_Dantzig1956-qp suggested that the height of the dikes should be increased until the sum of their construction cost and the damages expected from future floods reaches a minimum.  We now have an equation that describes the cost of building dikes as a function of their height, $I(H) = I_0+ kH$, and another equation that describes the expected future damages due to floods, also as a function of dike height, $L(H) \approx (V p_0 e^{-\alpha H})/\delta$.
 
-The following code block plots $I(H)$, $L(H)$, and their sum $I(H)+ L(H)$, and finds the minimum on the total curve (Fig. 9).  This point corresponds to the optimal dike height, in the case where this analysis' assumptions are satisfied.
+The following code block plots $I(H)$, $L(H)$, and their sum $C(H) = I(H)+ L(H)$, and finds the minimum on the total curve (Fig. 9).  This point corresponds to the optimal dike height, in the case where this analysis' assumptions are satisfied.
 
-```{r, fig.width = 4, fig.height = 4, fig.cap = "Expected total future damages due to flooding at different dike heights $I(H)$ (blue curve), the costs of building dikes of different heights $L(H)$ (red curve), and their sum (black curve).  The minimum point on the black curve indicates the optimal dike height."}
+```{r, fig.width = 4, fig.height = 4, fig.cap = "Expected total future damages due to flooding at different dike heights $L(H)$ (red curve), the costs of building dikes of different heights $I(H)$ (blue curve), and their sum $C(H)$ (black curve).  The minimum point on the black curve indicates the optimal dike height."}
 # Constants from Van Dantzig (1956) -- read the whole paper carefully to see
 # where these values come from
 p_0 = 0.0038    # unitless; probability of flooding in a given year if the dikes
@@ -117,19 +117,19 @@ H = seq(0, 3, by = 0.001)
 # dikes I, and the total of L and I, all as a function of H.
 L = p_0* exp(-alpha* H)* V/ (delta)
 I = I_0+ k* H
-Total = L+ I
+C = L+ I
 
-# Make a plot.  The lowest point on the Total curve
+# Make a plot.  The lowest point on the C curve
 # is the best value for H.
 plot(H, L, type = "l", col = "red", xlab = "Dike height increase H (m)",
      ylab = "Cost (guilders)", bty = "n")
 lines(H, I, col = "blue")
-lines(H, Total, col = "black", lwd = 2)
+lines(H, C, col = "black", lwd = 2)
 
 # Add a point indicating the minimum.
-min_Total = Total[rank(Total) == 1]
-min_H = H[rank(Total) == 1]
-points(min_H, min_Total, pch = 16)
+min_C = C[which.min(C)]
+min_H = H[which.min(C)]
+points(min_H, min_C, pch = 16)
 ```
 
 ### Monte Carlo simulation
@@ -228,7 +228,9 @@ print(round(quantile(best.heights, probs = probs), 3))
 ## Exercise
 
 *Part 1.*  Make a plot of the discount factor $F_\textrm{d}$ for `delta = seq(0, 0.1, by = 0.02)` over the time interval 0-200 yr.  (Make sure you are plotting the discount factor, not its cumulative sum as shown in Fig. 8.)
+
 *Part 2.*  Execute `lab4_sample.R` and take note of the quantiles that the script produces.  Save a copy of the histogram produced by the script.
+
 *Part 3.*  Make a copy of `lab4_sample.R` by saving it with a different file name.  Modify this copied file so that it incorporates randomly-selected `V` and `k` values into the Monte Carlo simulation.  You'll need to create vectors `V.vals` and `k.vals` and populate them with random values, using code similar to that for `delta.vals`, above.  You'll also need to change the line in which `best.heights` is calculated, to incorporate these values into calculation of the optimal dike heights.  Execute this new script, take note of the quantiles, and save a copy of the histogram it produces.
 
 ## Questions

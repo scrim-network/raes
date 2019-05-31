@@ -18,7 +18,7 @@ output:
 
 ## Learning objectives
 
-After completing this exercise, you should be able to
+After completing this chapter, you should be able to
 
 * fit a second-order polynomial to sea level data
 * write your own functions in R
@@ -26,23 +26,25 @@ After completing this exercise, you should be able to
 
 ## Introduction
 
-In Exercise #4, we examined the question of how high to build structures for flood protection, based on the analysis of @Van_Dantzig1956-qp.  In that exercise, we identified the dike height that minimizes the total costs from dike construction and future flooding.  We also examined how changing some of the input parameters within reasonable ranges affects the estimated optimal dike height.
+In Chapter #4, we examined the question of how high to build structures for flood protection, based on the analysis of @Van_Dantzig1956-qp.  In that chapter, we identified the dike height that minimizes the total costs from dike construction and future flooding.  We also examined how changing some of the input parameters within reasonable ranges affects the estimated optimal dike height.
 
-This analysis is appealingly simple; however, it assumes no change in sea level, whereas [tide gauge](https://en.wikipedia.org/wiki/Tide_gauge) data shows that sea level is rising (see Exercise #1).  Sea level has risen by a few tens of centimeters over the last two centuries [@Jevrejeva2008-zw; @Jevrejeva2014-my], and could rise by a meter or more by the end of the century [e.g. Pfeffer2008-uq].  If we did not take this rise into account when building flood protection structures, we would build the dikes too low and be flooded much more often than expected as a result [@Sriver2012-bj].
+This analysis is appealingly simple; however, it assumes no change in sea level, whereas [tide gauge](https://en.wikipedia.org/wiki/Tide_gauge) data shows that sea level is rising (see Exercise #1).  Sea level has risen by a few tens of centimeters over the last two centuries [@Jevrejeva2008-zw; @Jevrejeva2014-my], and could rise by a meter or more by the end of the century [e.g. @Pfeffer2008-uq].  If we did not take this rise into account when building flood protection structures, we would build the dikes too low and be flooded much more often than expected as a result [@Sriver2012-bj].
 
 If we wanted to incorporate future sea level change into the @Van_Dantzig1956-qp analysis, we would first need to characterize past sea level change.  We can think of a time series, such as the sea level data, as a smooth curve with some superimposed "wiggles."  For example, @Jevrejeva2008-zw noted that the sea level data show a decline between ~1700 and ~1850, then an accelerating rise.  These data have the general shape of a [second-order polynomial](https://en.wikipedia.org/wiki/Quadratic_function) (a parabola).  The sea level data contains some short-period noise, though, so there will be some remaining differences between the data and any smooth curve drawn through the data.  These remaining differences are called *residuals*.
 
 [Fitting a curve to data](https://en.wikipedia.org/wiki/Curve_fitting) is a very common operation in risk analysis and scientific computing in general.  As pointed out in the Wikipedia article, curve fitting allows us to separate the trend in a data set from its "wiggles" (smoothing), estimate a quantity between existing data points (interpolation), or estimate a quantity outside of the range of our data (extrapolation).
 
-In this exercise, we'll fit a second-order polynomial to the sea level data from @Jevrejeva2008-zw, both manually and using automated methods.  We'll also examine the residuals that are left over after performing this curve fit.
+In this chapter, we'll fit a second-order polynomial to the sea level data from @Jevrejeva2008-zw, both manually and using automated methods.  We'll also examine the residuals that are left over after performing this curve fit.
 
 ## Tutorial
 
 We'll use a somewhat older version of the sea-level data that we saw in Exercise #1, from @Jevrejeva2008-zw.  The following code block creates a new directory and downloads the data into it:
 
 ```{r eval = FALSE}
-# Create a directory called data and download a file into it.
-dir.create("data")
+# Create a directory called data if it does not exist and download a file into it.
+if (!dir.exists('data')) {
+  dir.create("data")
+}
 download.file("http://www.psmsl.org/products/reconstructions/gslGRL2008.txt",
               "data/gslGRL2008.txt")
 ```

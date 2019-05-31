@@ -80,19 +80,17 @@ The *Times* article goes on to explain that, as R's popularity increases, other 
 
 ## About this book
 
-This e-textbook presents a series of laboratory exercises that introduce students to the statistical aspects of risk analysis in the Earth sciences using R.  Most of these exercises have to do with sea level rise, which is a major focus of the authors' research activities.
+This textbook presents a series of chapters that introduce students to the statistical aspects of risk analysis in the Earth sciences using R.  Most of these chapters have to do with sea-level rise, which is a major focus of the authors' research activities.
 
 The exercises are intended for upper-level undergraduates, beginning graduate students, and professionals in other areas who wish to gain insight into academic climate risk analysis.  Previous programming experience is helpful, but not required; the first exercise explains how to learn the basics of R.
 
-Each exercise begins with a description of the Earth science and/or statistical concepts that the exercise teaches.  Next, each exercise presents a detailed explanation of a piece of existing R code.  Finally, students are asked to either modify the existing code or write their own code to produce a well-defined outcome.  Each exercise also includes questions to encourage classroom discussion and reflection on the part of individual students.
+Each chapter begins with a description of the Earth science and/or statistical concepts that the chapter teaches.  Next, each chapter presents a detailed explanation of a piece of existing R code.  Finally, students are asked to either modify the existing code or write their own code to produce a well-defined outcome.  Each chapter also includes questions to encourage classroom discussion and reflection on the part of individual students.
 
 A few chapters contain appendices that present additional discussion of the topics raised in the preceding parts of those chapters.  These appendices are intended for graduate students or researchers who have additional background in programming or the Earth sciences.  They can be skipped by other readers with no loss in comprehension.
 
-The book is designed to be modular.  The first nine exercises (0-8) were written by Patrick Applegate, with contributions by others as noted in the individual chapters.  Other exercises may be added by members of the Keller research group in the future.
+The book is designed to be modular.  The first eight chapters (0-7) were written by Patrick Applegate, with contributions by others as noted in the individual chapters.  Chapter 8 was written by Vivek Srikrishnan, and Chapter 9 by Tony Wong. Other chapters may be added by members of the Keller research group in the future.
 
 ## Where to get the book and sample R scripts
-
-This book is available from [Leanpub](https://leanpub.com/) at [https://leanpub.com/raes](https://leanpub.com/raes).
 
 As noted above, most of the exercises presented in this e-textbook ask students to modify existing R scripts.  These R scripts can be downloaded as a `.zip` file from [www.scrimhub.org/raes](www.scrimhub.org/raes).
 
@@ -100,8 +98,8 @@ The source files for the book are stored in a Github repository at https://githu
 
 ## We welcome your comments and questions
 
-We'd like to make *Risk Analysis in the Earth Sciences* as useful as possible.  If you have a comment about the book or a question about one of the exercises, please post an issue to the Github repository mentioned above.  If we make a change to the book based on your comments, we will be sure to add your name to the Acknowledgements section in future versions.
+We'd like to make *Risk Analysis in the Earth Sciences* as useful as possible.  If you have a comment about the book or a question about one of the chapters, please post an issue to the Github repository mentioned above.  If we make a change to the book based on your comments, we will be sure to add your name to the Acknowledgements section in future versions.
 
 ## An important note
 
-Carrying out the exercises in this e-textbook will not teach you to perform publication-quality or consulting-grade risk analyses.  This e-textbook is intended primarily for advanced undergraduates, and the material presented here should only be applied to "real" problems after additional training.  The authors and editors of this e-textbook specifically disclaim any liability for damages associated with the use of the material presented in this e-textbook.
+Completing the chapters in this textbook will not teach you to perform publication-quality or consulting-grade risk analyses.  This textbook is intended primarily for advanced undergraduates, and the material presented here should only be applied to "real" problems after additional training.  The authors and editors of this textbook specifically disclaim any liability for damages associated with the use of the material presented in this textbook.

@@ -7,6 +7,8 @@ output:
 bibliography: raes.bib
 csl: american-geophysical-union.csl
 link-citations: true
+header-includes:
+  \usepackage{setspace}\doublespacing
 ---
 
 <!-- Copyright 2015 by the Authors -->
@@ -81,17 +83,12 @@ $\pagebreak$
 
 $\pagebreak$
 
-```{r child = "13_chap8_oat_sensitivity.Rmd"}
+```{r child = "13_chap8_van_dantzig_uncertain.Rmd"}
 ```
 
 $\pagebreak$
 
-```{r child = "14_chap9_van_dantzig_uncertain.Rmd"}
-```
-
-$\pagebreak$
-
-```{r child = "15_chap10_values.Rmd"}
+```{r child = "14_chap9_oat_sensitivity.Rmd"}
 ```
 
 $\pagebreak$

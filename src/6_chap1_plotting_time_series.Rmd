@@ -18,7 +18,7 @@ output:
 
 ## Learning objectives
 
-After completing this exercise, you should be able to
+After completing this chapter, you should be able to
 
 * explain the relationship between atmospheric carbon dioxide concentration, surface air temperature, and sea level
 * download data from the Internet in R
@@ -29,7 +29,7 @@ After completing this exercise, you should be able to
 
 ## Introduction
 
-This textbook on climate risk management will discuss sea level rise extensively.  Many people live near present-day sea level [e.g., @Nicholls2008-af], and rises in sea level expose these people to the possibility of flooding.  For example, the ongoing increase in sea level will likely cause communities on the United States' eastern coast to experience frequent flooding within the next few decades [@Spanger-Siegfried2014-mx].
+This textbook on climate risk management will discuss sea-level rise extensively.  Many people live near present-day sea level [e.g., @Nicholls2008-af], and rises in sea level expose these people to the possibility of flooding.  For example, the ongoing increase in sea level will likely cause communities on the United States' eastern coast to experience frequent flooding within the next few decades [@Spanger-Siegfried2014-mx].
 
 Sea level rise is caused by temperature increases, which in turn are driven by increases in carbon dioxide concentrations in the atmosphere.  Carbon dioxide is produced by human activities and natural processes.  Increases in carbon dioxide concentrations in the atmosphere enhance the trapping of infrared radiation near the Earth's surface and contribute to rises in surface air temperatures.  As the ocean absorbs some of the excess heat from the atmosphere, its temperature increases, causing it to expand and causing sea level rise.  Temperature increases cause melt of glaciers and ice sheets, which leads to sea level rise by adding mass to the oceans.
 
@@ -41,7 +41,7 @@ Measurements of former atmospheric compositions from bubbles trapped in ice core
 
 Because carbon dioxide mixes readily in the atmosphere, measurements of atmospheric carbon dioxide concentrations at most places on the Earth's surface are relatively representative of the globe as a whole.  In contrast, both surface air temperatures and sea levels are measured at widely dispersed stations and must be aggregated to give a global mean value.  Global mean temperatures must be estimated from individual weather stations with long records [@Hansen2010-wg]; past sea levels are estimated using data from tide gages [@Jevrejeva2014-my].  As one might expect, there are various methods for performing this aggregation, and the different methods give somewhat different answers.  However, it seems clear that both global mean surface air temperature and global mean sea level are rising.
 
-In this lab exercise, you'll examine an R script that downloads the data files needed to make the top two panels of Figure 3 from the Internet and plots them.  You'll then modify the script so that it plots all three panels of Figure 3.
+In this chapter, you'll examine an R script that downloads the data files needed to make the top two panels of Figure 3 from the Internet and plots them.  You'll then modify the script so that it plots all three panels of Figure 3.
 
 ```{r echo = FALSE, fig.cap = "Atmospheric carbon dioxide concentrations (top panel), surface air temperature change (middle panel), and sea level change (bottom panel), between 1900 and ~2015.  All three quantities rise over this period, suggesting a causal relationship between them. See text for discussion."}
 knitr::include_graphics("figures/lab1_plot1.pdf")

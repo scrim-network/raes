@@ -18,7 +18,7 @@ output:
 
 ## Learning objectives
 
-After completing this exercise, you should be able to
+After completing this chapter, you should be able to
 
 * perform a very simple bootstrap of time series data by resampling residuals
 * identify potential problems in applying this approach to "real" data, such as the sea level data from @Jevrejeva2008-zw
@@ -27,7 +27,7 @@ After completing this exercise, you should be able to
 
 Making estimates of potential future changes, with uncertainties, is a key aspect of environmental risk analysis.  For example, the amount by which sea level will rise in the future is clearly an important input for the design of flood protection structures; if sea levels are expected to rise by several meters over the next few centuries, then perhaps dikes must be built higher than if they are expected to rise by a few tens of centimeters.
 
-In this exercise, we'll combine techniques from the two preceding chapters to demonstrate techniques that could be used to estimate future sea level rise.  In Exercise #5, we fitted a second-order polynomial to sea level data covering the last ~300 yr.  In Exercise #6, we learned how to perform a simple bootstrap analysis using coin flips.  Here, we'll apply the bootstrap to estimate our uncertainties in future sea level based on curve fitting.
+In this chapter, we'll combine techniques from the two preceding chapters to demonstrate techniques that could be used to estimate future sea level rise.  In Chapter #5, we fitted a second-order polynomial to sea level data covering the last ~300 yr.  In Chapter #6, we learned how to perform a simple bootstrap analysis using coin flips.  Here, we'll apply the bootstrap to estimate our uncertainties in future sea level based on curve fitting.
 
 It's important to note that the sea level rise projections you will produce in this exercise are probably too low, and the associated uncertainties are also incorrect.  The approach used in this exercise assumes that
 
@@ -73,7 +73,7 @@ But these residuals only represent the "wiggles," not the long-term trend in the
 
 ```{r eval = FALSE}
 # Add the resampled residuals to the best-fit second-order polynomial.
-boot.sl <- best.sl+ boot.resids
+boot.sl <- best.sl + boot.resids
 ```
 
 To see why the code block above works, recall that R adds vectors of the same length [element-by-element](https://cran.r-project.org/doc/manuals/r-release/R-intro.html#Vector-arithmetic).
